@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Krucial Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../shared/icons.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}body{overflow-x:hidden;}
+    @media(max-width:900px){.nav-links{display:none!important}.hamburger{display:flex!important;flex-direction:column}.grid-2{grid-template-columns:1fr!important}.grid-3{grid-template-columns:1fr 1fr!important}.grid-4{grid-template-columns:1fr 1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}}
+    @media(max-width:600px){.grid-3{grid-template-columns:1fr!important}.grid-4{grid-template-columns:1fr!important}.footer-grid{grid-template-columns:1fr!important}}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060F}::-webkit-scrollbar-thumb{background:#0A84FF55;border-radius:3px}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script src="../shared/themes.js"></script>
+<script type="text/babel" src="../shared/layout.jsx"></script>
+<script type="text/babel">
+
+function ContactForm({ theme: t }) {
+  const [form,setForm]=React.useState({name:'',email:'',company:'',phone:'',service:'',message:''});
+  const [sent,setSent]=React.useState(false);
+  const services=['AI Solutions','CCTV AI Systems','Automation','Data Digitisation','IoT & Smart Systems','Cloud & Infrastructure','Not sure yet'];
+  const update=f=>e=>setForm({...form,[f]:e.target.value});
+  const inputStyle={width:'100%',background:t.bgAlt,border:`1px solid ${t.accent}33`,borderRadius:8,padding:'12px 14px',color:t.text,fontFamily:"'Inter',sans-serif",fontSize:14,outline:'none',boxSizing:'border-box',transition:'border-color 0.2s'};
+  const labelStyle={display:'block',color:t.textMuted,fontFamily:"'Space Grotesk',sans-serif",fontSize:11,fontWeight:700,marginBottom:6,letterSpacing:'0.08em',textTransform:'uppercase'};
+
+  if(sent) return (
+    <div style={{textAlign:'center',padding:'60px 40px',background:t.bgAlt,border:`1px solid ${t.accent}44`,borderRadius:20}}>
+      <div style={{fontSize:56,marginBottom:20,color:t.accent}}>✓</div>
+      <h3 style={{fontFamily:"'Space Grotesk',sans-serif",color:t.text,fontSize:26,fontWeight:800,marginBottom:12}}>Message Received!</h3>
+      <p style={{color:t.textMuted,fontSize:16,lineHeight:1.7}}>Our team will review your inquiry and respond within <strong style={{color:t.text}}>24 business hours</strong>. For urgent matters, reach us directly at <span style={{color:t.accent}}>info@krucialsystems.com</span></p>
+    </div>
+  );
+
+  return (
+    <form onSubmit={e=>{e.preventDefault();setSent(true);}} style={{background:t.bgAlt,border:`1px solid ${t.accent}22`,borderRadius:20,padding:'40px'}}>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:16}} className="grid-2">
+        <div><label style={labelStyle}>Full Name *</label><input required type="text" value={form.name} onChange={update('name')} style={inputStyle} onFocus={e=>e.target.style.borderColor=t.accent} onBlur={e=>e.target.style.borderColor=`${t.accent}33`}/></div>
+        <div><label style={labelStyle}>Work Email *</label><input required type="email" value={form.email} onChange={update('email')} style={inputStyle} onFocus={e=>e.target.style.borderColor=t.accent} onBlur={e=>e.target.style.borderColor=`${t.accent}33`}/></div>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:16}} className="grid-2">
+        <div><label style={labelStyle}>Company</label><input type="text" value={form.company} onChange={update('company')} style={inputStyle} onFocus={e=>e.target.style.borderColor=t.accent} onBlur={e=>e.target.style.borderColor=`${t.accent}33`}/></div>
+        <div><label style={labelStyle}>Phone Number</label><input type="tel" value={form.phone} onChange={update('phone')} style={inputStyle} onFocus={e=>e.target.style.borderColor=t.accent} onBlur={e=>e.target.style.borderColor=`${t.accent}33`}/></div>
+      </div>
+      <div style={{marginBottom:16}}>
+        <label style={labelStyle}>Service of Interest</label>
+        <select value={form.service} onChange={update('service')} style={{...inputStyle,appearance:'none'}}>
+          <option value="">Select a service...</option>
+          {services.map(s=><option key={s} value={s}>{s}</option>)}
+        </select>
+      </div>
+      <div style={{marginBottom:24}}>
+        <label style={labelStyle}>Tell us about your project *</label>
+        <textarea required rows={5} value={form.message} onChange={update('message')} placeholder="Describe your challenge, current setup, and what outcomes you're looking for..." style={{...inputStyle,resize:'vertical'}} onFocus={e=>e.target.style.borderColor=t.accent} onBlur={e=>e.target.style.borderColor=`${t.accent}33`}/>
+      </div>
+      <button type="submit" style={{width:'100%',background:t.accent,color:t.accentText||'#fff',border:'none',borderRadius:8,padding:'16px',fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:16,cursor:'pointer',boxShadow:`0 0 30px ${t.accent}44`,transition:'all 0.2s'}}
+        onMouseEnter={e=>{e.target.style.transform='translateY(-2px)';e.target.style.boxShadow=`0 8px 40px ${t.accent}66`;}}
+        onMouseLeave={e=>{e.target.style.transform='';e.target.style.boxShadow=`0 0 30px ${t.accent}44`;}}>
+        Send Message →
+      </button>
+    </form>
+  );
+}
+
+function App() {
+  const [themeKey,setThemeKey]=React.useState(getSavedTheme);
+  const [demo,setDemo]=React.useState(false);
+  const t=THEMES[themeKey];
+  React.useEffect(()=>{document.body.style.background=t.bg;},[t.bg]);
+
+  return (
+    <div style={{background:t.bg,minHeight:'100vh'}}>
+      <SharedNavbar theme={t} onDemo={()=>setDemo(true)}/>
+      <PageHero theme={t} badge="Get in Touch" title="Let's Build Something" highlight="Remarkable." subtitle="Tell us your challenge — our engineering team will design a solution and get back to you within 24 hours."/>
+
+      <section style={{padding:'80px 5%',background:t.bg}}>
+        <div style={{maxWidth:1280,margin:'0 auto',display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:64,alignItems:'start'}} className="grid-2">
+          {/* Left info */}
+          <div>
+            <SectionLabel theme={t} label="Contact Information"/>
+            <h2 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:'clamp(24px,3vw,36px)',fontWeight:800,color:t.text,letterSpacing:'-0.03em',lineHeight:1.1,marginBottom:32}}>Talk to Our<br/><span style={{color:t.accent}}>Engineering Team</span></h2>
+
+            {[
+              ['Mail','Email','info@krucialsystems.com','mailto:info@krucialsystems.com'],
+              ['Phone','Phone','+92 (21) 000-0000','tel:+920000000'],
+              ['MapPin','Office','Plot No. X, Karachi, Pakistan','#'],
+              ['Clock','Response Time','Within 24 business hours','#'],
+            ].map(([icon,label,val,href])=>(
+              <div key={label} style={{display:'flex',gap:16,marginBottom:24,alignItems:'flex-start'}}>
+                <div style={{width:44,height:44,borderRadius:10,background:`${t.accent}18`,border:`1px solid ${t.accent}33`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,color:t.accent}}><Icon name={icon} size={20} color={t.accent}/></div>
+                <div>
+                  <div style={{color:t.textMuted,fontFamily:"'Space Grotesk',sans-serif",fontSize:11,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:4}}>{label}</div>
+                  <a href={href} style={{color:t.text,fontFamily:"'Space Grotesk',sans-serif",fontSize:15,fontWeight:600,textDecoration:'none',transition:'color 0.2s'}}
+                    onMouseEnter={e=>e.target.style.color=t.accent} onMouseLeave={e=>e.target.style.color=t.text}>{val}</a>
+                </div>
+              </div>
+            ))}
+
+            <div style={{marginTop:40,padding:'24px',background:t.bgAlt,border:`1px solid ${t.accent}22`,borderRadius:14}}>
+              <div style={{color:t.accent,fontFamily:"'Space Grotesk',sans-serif",fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:12}}>Services We Offer</div>
+              {['AI Solutions','CCTV AI Systems','Data Digitisation','Automation','IoT & Smart Systems','Cloud & Infrastructure'].map(s=>(
+                <div key={s} style={{display:'flex',gap:8,alignItems:'center',marginBottom:8}}>
+                  <div style={{width:5,height:5,borderRadius:'50%',background:t.accent,flexShrink:0}}/>
+                  <a href={`${s.toLowerCase().replace(/ /g,'-').replace(/[&]/g,'').replace(/--/g,'-')}.html`} style={{color:t.textMuted,fontSize:14,textDecoration:'none',transition:'color 0.2s'}}
+                    onMouseEnter={e=>e.target.style.color=t.accent} onMouseLeave={e=>e.target.style.color=t.textMuted}>{s}</a>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right form */}
+          <div>
+            <ContactForm theme={t}/>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{background:t.bgAlt,padding:'80px 5%',borderTop:`1px solid ${t.accent}22`}}>
+        <div style={{maxWidth:900,margin:'0 auto'}}>
+          <div style={{textAlign:'center',marginBottom:48}}>
+            <SectionLabel theme={t} label="FAQs"/>
+            <SectionHeading theme={t}>Common Questions</SectionHeading>
+          </div>
+          {[
+            ['How long does a typical AI deployment take?','Most projects run 6–14 weeks from kickoff to go-live. Simpler automation projects can be live in 3–4 weeks; large-scale infrastructure takes 3–6 months. We provide a detailed timeline in every proposal.'],
+            ['Do you work with businesses outside Karachi?','Yes — we serve clients across Pakistan and can work remotely for software-only projects. For hardware deployments, we have engineers in Karachi and Lahore.'],
+            ['What if we don\'t have clean data?','Most of our clients start with messy, incomplete or paper-based data. Data preparation and digitisation is one of our core services — we help you get AI-ready.'],
+            ['Do you offer a proof of concept before full deployment?','Yes. For most engagements we recommend a 2–4 week paid PoC to validate the approach, demonstrate results and reduce risk before full investment.'],
+            ['Who owns the AI models and data after deployment?','You do — 100%. All models, code and data produced in your engagement are fully owned by your organisation. We provide full source code and documentation.'],
+          ].map(([q,a],i)=>(
+            <FAQItem key={q} q={q} a={a} theme={t}/>
+          ))}
+        </div>
+      </section>
+
+      <SharedFooter theme={t}/>
+      {demo&&<SharedDemoModal theme={t} onClose={()=>setDemo(false)}/>}
+      <SharedThemeSwitcher current={themeKey} onChange={k=>{setThemeKey(k);saveTheme(k);}}/>
+    </div>
+  );
+}
+
+function FAQItem({ q, a, theme: t }) {
+  const [open,setOpen]=React.useState(false);
+  return (
+    <div style={{border:`1px solid ${t.accent}22`,borderRadius:12,overflow:'hidden',marginBottom:8}}>
+      <button onClick={()=>setOpen(!open)} style={{width:'100%',background:open?t.bgAlt:t.bg,border:'none',padding:'20px 24px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer',textAlign:'left',transition:'background 0.2s'}}>
+        <span style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:16,fontWeight:600,color:t.text}}>{q}</span>
+        <span style={{color:t.accent,fontSize:20,marginLeft:16,transform:open?'rotate(45deg)':'none',transition:'transform 0.2s',flexShrink:0}}>+</span>
+      </button>
+      {open && <div style={{padding:'0 24px 20px',background:t.bgAlt}}><p style={{color:t.textMuted,fontSize:15,lineHeight:1.7}}>{a}</p></div>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body></html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Studies — Krucial Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../shared/icons.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}body{overflow-x:hidden;}
+    @media(max-width:900px){.nav-links{display:none!important}.hamburger{display:flex!important;flex-direction:column}.grid-2{grid-template-columns:1fr!important}.grid-3{grid-template-columns:1fr 1fr!important}.grid-4{grid-template-columns:1fr 1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}}
+    @media(max-width:600px){.grid-3{grid-template-columns:1fr!important}.grid-4{grid-template-columns:1fr!important}.footer-grid{grid-template-columns:1fr!important}}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060F}::-webkit-scrollbar-thumb{background:#0A84FF55;border-radius:3px}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script src="../shared/themes.js"></script>
+<script type="text/babel" src="../shared/layout.jsx"></script>
+<script type="text/babel">
+
+const CASES = [
+  {
+    id:'retail-cctv', tag:'Retail · CCTV AI', title:'AI Surveillance for Retail Chain',
+    client:'Multi-branch fashion retailer, Karachi', duration:'90 days', team:'4 engineers',
+    problem:'A 12-branch fashion retail chain was losing an estimated PKR 8M per year to theft and inventory shrinkage, with no visibility across stores and no real-time alerting system.',
+    solution:'Krucial deployed an end-to-end CCTV AI platform — 48 cameras across 12 branches, edge AI inference nodes, centralized monitoring dashboard and instant WhatsApp/SMS alerting for managers.',
+    tech:['Computer Vision','Object Detection','Edge AI','Real-time Alerting','Cloud Dashboard'],
+    results:[['35%','Reduction in losses within 90 days'],['48','Cameras deployed across 12 branches'],['< 3s','Average alert response time'],['PKR 2.8M','Annual savings in Year 1']],
+    quote:'We went from blind spots everywhere to total visibility. The ROI was clear in month one.',
+  },
+  {
+    id:'construction-safety', tag:'Construction · Safety AI', title:'PPE Compliance AI — High-Rise Site',
+    client:'Construction contractor, Karachi waterfront project', duration:'45 days setup', team:'3 engineers',
+    problem:'A major construction project was failing weekly safety audits — workers not wearing hard hats, vests or masks in restricted zones, leading to insurance penalties and site delays.',
+    solution:'Deployed 24 AI cameras across the site configured for PPE detection (hard hat, vest, mask, gloves). Automated daily compliance reports and instant zone-breach notifications to site managers.',
+    tech:['PPE Detection AI','Zone Monitoring','Automated Reporting','SMS Alerting','Site Analytics'],
+    results:[['92%','PPE compliance rate (up from 41%)'],['60%','Reduction in safety incidents'],['24','AI cameras across active zones'],['Zero','Insurance penalties post-deployment']],
+    quote:'The safety transformation was visible within a week. Our insurance premiums dropped by 18%.',
+  },
+  {
+    id:'logistics-inventory', tag:'Logistics · Computer Vision', title:'Automated Inventory for Logistics Firm',
+    client:'Third-party logistics company, Port Qasim', duration:'60 days', team:'5 engineers',
+    problem:'Manual inventory counting across a 50,000 sqft warehouse was taking 3 full days per cycle, with a 4.2% error rate causing shipment delays and customer disputes worth millions.',
+    solution:'Krucial installed computer vision scanning gates at all entry/exit points, integrated with the WMS system and built a real-time stock dashboard with AI-powered anomaly detection.',
+    tech:['Computer Vision','Barcode/QR AI','WMS Integration','Real-time Dashboard','Anomaly Detection'],
+    results:[['10×','Faster inventory cycle (3 days → 4 hours)'],['99.1%','Scan accuracy (up from 95.8%)'],['PKR 4.2M','Annual dispute cost eliminated'],['Real-time','Live stock levels across all zones']],
+    quote:'Our clients now get live inventory updates. It changed how we win contracts.',
+  },
+  {
+    id:'hospital-digitisation', tag:'Healthcare · Data Digitisation', title:'20-Year Patient Record Digitisation',
+    client:'Teaching hospital, Karachi', duration:'6 weeks', team:'6 engineers',
+    problem:'A 400-bed teaching hospital had 2.4 million patient records stored in paper files across 3 archive rooms — inaccessible, at risk from damage and creating 2-hour delays per patient lookup.',
+    solution:'Krucial deployed a high-throughput AI-OCR pipeline — scanning, extracting, validating and indexing all 2.4M records into a secure, encrypted digital repository integrated with the hospital HIS.',
+    tech:['AI-OCR','Intelligent Extraction','Data Validation','Encrypted Storage','HIS Integration'],
+    results:[['2.4M','Records digitised in 6 weeks'],['99.1%','Extraction accuracy'],['< 10s','Patient record lookup (was 2 hours)'],['100%','Disaster-proof encrypted backup']],
+    quote:'Finding a 10-year-old record now takes 8 seconds. The clinical impact has been enormous.',
+  },
+  {
+    id:'bank-kyc', tag:'Banking · Automation', title:'KYC Automation for Commercial Bank',
+    client:'Commercial bank, Karachi HQ + 18 branches', duration:'3 months', team:'4 engineers',
+    problem:'New account opening required 72-hour manual KYC review — CNIC verification, form extraction, document cross-checking — creating customer churn and compliance backlogs.',
+    solution:'Built an end-to-end KYC automation pipeline: AI document extraction, NADRA integration for CNIC verification, automated AML screening and digital approval workflow with compliance logging.',
+    tech:['Document AI','NADRA Integration','AML Screening','Workflow Automation','Compliance Logging'],
+    results:[['72hrs → 4hrs','Account opening time'],['90%','Documents processed without human review'],['100%','Audit trail compliance'],['PKR 6M','Annual staff cost reallocated']],
+    quote:'Compliance is tighter than before but customers open accounts 18× faster. Best of both worlds.',
+  },
+  {
+    id:'smart-city', tag:'Government · Smart City', title:'Traffic AI — City Traffic Management',
+    client:'Municipal authority, major Pakistani city', duration:'4 months', team:'8 engineers',
+    problem:'City traffic management relied on manual signal timing and human patrol for violation detection — leading to chronic congestion, 18,000+ unprocessed violations per month and high accident rates.',
+    solution:'Deployed AI-powered LPR and traffic flow cameras at 40 junctions, integrated with central command, automated violation notices and adaptive signal timing based on real-time congestion data.',
+    tech:['LPR AI','Traffic Flow Analysis','Adaptive Signals','Violation Automation','Command Dashboard'],
+    results:[['28%','Congestion reduction at monitored junctions'],['4,200','Daily automated violation notices'],['40','AI-enabled junctions in Phase 1'],['18%','Reduction in reported accidents']],
+    quote:'Phase 1 results justified Phase 2 budget in the first board meeting. The data speaks for itself.',
+  },
+];
+
+function CaseCard({ c, theme: t, visible, delay }) {
+  const [open,setOpen]=React.useState(false);
+  return (
+    <div style={{ background:t.bgAlt, border:`1px solid ${t.accent}22`, borderRadius:16, overflow:'hidden', opacity:visible?1:0, transform:visible?'none':'translateY(30px)', transition:`all 0.6s ease ${delay}s` }}>
+      <div style={{ padding:'28px 28px 0' }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:16, flexWrap:'wrap', gap:8 }}>
+          <span style={{ background:`${t.accent}18`, color:t.accent, borderRadius:4, padding:'4px 12px', fontSize:11, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif", letterSpacing:'0.06em' }}>{c.tag}</span>
+          <div style={{ display:'flex', gap:12 }}>
+            <span style={{ color:t.textMuted, fontSize:12, display:'flex', alignItems:'center', gap:4 }}><Icon name="Clock" size={12} color={t.textMuted}/>{c.duration}</span>
+            <span style={{ color:t.textMuted, fontSize:12, display:'flex', alignItems:'center', gap:4 }}><Icon name="Users" size={12} color={t.textMuted}/>{c.team}</span>
+          </div>
+        </div>
+        <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:20, fontWeight:800, color:t.text, letterSpacing:'-0.02em', marginBottom:12 }}>{c.title}</h3>
+        <div style={{ color:t.textMuted, fontSize:12, marginBottom:16 }}>📍 {c.client}</div>
+
+        {/* Results grid */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:8, marginBottom:20 }}>
+          {c.results.map(([val,label])=>(
+            <div key={label} style={{ background:t.bg, border:`1px solid ${t.accent}18`, borderRadius:8, padding:'12px 14px' }}>
+              <div style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:17, fontWeight:800, color:t.accent, marginBottom:4 }}>{val}</div>
+              <div style={{ color:t.textMuted, fontSize:11, lineHeight:1.4 }}>{label}</div>
+            </div>
+          ))}
+        </div>
+
+        <button onClick={()=>setOpen(!open)} style={{ background:'none', border:`1px solid ${t.accent}33`, borderRadius:8, padding:'9px 16px', color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:12, fontWeight:600, cursor:'pointer', width:'100%', marginBottom:open?0:28 }}>
+          {open?'Close Case Study ↑':'Read Full Case Study ↓'}
+        </button>
+      </div>
+
+      {open && (
+        <div style={{ padding:'20px 28px 28px', borderTop:`1px solid ${t.accent}18`, background:t.bg }}>
+          <div style={{ marginBottom:16 }}>
+            <div style={{ color:t.accent, fontSize:11, fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', fontFamily:"'Space Grotesk',sans-serif", marginBottom:6 }}>The Problem</div>
+            <p style={{ color:t.textMuted, fontSize:14, lineHeight:1.65 }}>{c.problem}</p>
+          </div>
+          <div style={{ marginBottom:16 }}>
+            <div style={{ color:t.accent, fontSize:11, fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', fontFamily:"'Space Grotesk',sans-serif", marginBottom:6 }}>Our Solution</div>
+            <p style={{ color:t.textMuted, fontSize:14, lineHeight:1.65 }}>{c.solution}</p>
+          </div>
+          <div style={{ marginBottom:20 }}>
+            <div style={{ color:t.accent, fontSize:11, fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', fontFamily:"'Space Grotesk',sans-serif", marginBottom:8 }}>Technologies Used</div>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+              {c.tech.map(t2=><span key={t2} style={{ background:`${t.accent}15`, color:t.accent, borderRadius:4, padding:'3px 10px', fontSize:11, fontWeight:600, fontFamily:"'Space Grotesk',sans-serif" }}>{t2}</span>)}
+            </div>
+          </div>
+          <div style={{ background:`${t.accent}0A`, border:`1px solid ${t.accent}22`, borderRadius:10, padding:'16px 18px' }}>
+            <div style={{ color:t.accent, marginBottom:8 }}><Icon name="Quote" size={20} color={t.accent}/></div>
+            <p style={{ color:t.text, fontSize:14, lineHeight:1.65, fontStyle:'italic' }}>{c.quote}</p>
+            <div style={{ color:t.textMuted, fontSize:12, marginTop:8 }}>— Client Representative</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  const [themeKey,setThemeKey]=React.useState(getSavedTheme);
+  const [demo,setDemo]=React.useState(false);
+  const t=THEMES[themeKey];
+  React.useEffect(()=>{document.body.style.background=t.bg;},[t.bg]);
+  const [ref,vis]=useInView(0.05);
+  return (
+    <div style={{background:t.bg,minHeight:'100vh'}}>
+      <SharedNavbar theme={t} onDemo={()=>setDemo(true)}/>
+      <PageHero theme={t} badge="Proven Results" title="Real Projects." highlight="Real Impact." subtitle="Six detailed case studies across retail, construction, logistics, healthcare, banking and government — with verified outcomes." cta="Discuss Your Project" onCta={()=>setDemo(true)}/>
+
+      {/* Summary stats */}
+      <section style={{background:t.bgAlt,padding:'50px 5%',borderTop:`1px solid ${t.accent}22`,borderBottom:`1px solid ${t.accent}22`}}>
+        <div style={{maxWidth:1280,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16}} className="grid-4">
+          {[['50+','Projects Delivered'],['6','Industries Covered'],['PKR 20M+','Client Savings Yr1'],['99%+','Client Retention']].map(([v,l])=><StatCard key={l} theme={t} value={v} label={l}/>)}
+        </div>
+      </section>
+
+      <section style={{padding:'80px 5%',background:t.bg}}>
+        <div style={{maxWidth:1280,margin:'0 auto'}}>
+          <div ref={ref} style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:24}} className="grid-2">
+            {CASES.map((c,i)=><CaseCard key={c.id} c={c} theme={t} visible={vis} delay={i*0.08}/>)}
+          </div>
+        </div>
+      </section>
+
+      <section style={{background:t.bgAlt,padding:'80px 5%',borderTop:`1px solid ${t.accent}22`}}>
+        <div style={{maxWidth:700,margin:'0 auto',textAlign:'center'}}>
+          <SectionLabel theme={t} label="Start Your Story"/>
+          <h2 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:'clamp(26px,3.5vw,40px)',fontWeight:800,color:t.text,letterSpacing:'-0.03em',marginBottom:16}}>Ready to Be Our <span style={{color:t.accent}}>Next Case Study?</span></h2>
+          <p style={{color:t.textMuted,fontSize:16,lineHeight:1.7,marginBottom:32}}>Every one of these projects started with a conversation. Tell us your challenge — we'll design a solution with measurable outcomes.</p>
+          <button onClick={()=>setDemo(true)} style={{background:t.accent,color:t.accentText||'#fff',border:'none',borderRadius:8,padding:'15px 32px',fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:15,cursor:'pointer',boxShadow:`0 0 40px ${t.accent}44`}}>Book a Free Consultation →</button>
+        </div>
+      </section>
+
+      <SharedFooter theme={t}/>
+      {demo&&<SharedDemoModal theme={t} onClose={()=>setDemo(false)}/>}
+      <SharedThemeSwitcher current={themeKey} onChange={k=>{setThemeKey(k);saveTheme(k);}}/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body></html>

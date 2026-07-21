@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Industries — Krucial Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../shared/icons.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}body{overflow-x:hidden;}
+    @media(max-width:900px){.nav-links{display:none!important}.hamburger{display:flex!important;flex-direction:column}.grid-2{grid-template-columns:1fr!important}.grid-3{grid-template-columns:1fr 1fr!important}.grid-4{grid-template-columns:1fr 1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}}
+    @media(max-width:600px){.grid-3{grid-template-columns:1fr!important}.grid-4{grid-template-columns:1fr!important}.footer-grid{grid-template-columns:1fr!important}}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060F}::-webkit-scrollbar-thumb{background:#0A84FF55;border-radius:3px}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script src="../shared/themes.js"></script>
+<script type="text/babel" src="../shared/layout.jsx"></script>
+<script type="text/babel">
+
+const INDUSTRIES = [
+  {
+    id:'govt', icon:'Building2', title:'Government & Smart Cities', tag:'Public Sector',
+    hero:'Modernise public infrastructure with AI-powered surveillance, traffic intelligence and citizen data systems.',
+    solutions:['Smart traffic management & LPR','City-wide CCTV with AI analytics','Citizen services automation','Air quality & environmental IoT','Public safety command centres'],
+    stats:[['40%','Faster Incident Response'],['60+','Camera Nodes Managed'],['3 Cities','Currently Deployed']],
+    cases:'Municipal traffic AI reduced congestion by 28% and automated 4,200 daily violation notices without manual review.',
+  },
+  {
+    id:'retail', icon:'ShoppingCart', title:'Retail & Malls', tag:'Retail Intelligence',
+    hero:'Drive sales, prevent loss and understand your customers with AI built for the shop floor.',
+    solutions:['AI loss prevention & theft detection','Customer footfall & heatmapping','Queue management systems','Inventory tracking with computer vision','In-store analytics dashboards'],
+    stats:[['35%','Avg. Loss Reduction'],['25%','Footfall Uplift'],['< 3s','Theft Alert Time']],
+    cases:'Fashion retail chain of 12 stores reduced shrinkage by 35% in 90 days after Krucial CCTV AI deployment.',
+  },
+  {
+    id:'logistics', icon:'Package', title:'Logistics & Warehousing', tag:'Supply Chain',
+    hero:'Automate your warehouse, track every asset and optimise every shipment with end-to-end AI.',
+    solutions:['Computer vision inventory scanning','Automated dispatch & sorting','Route optimisation AI','Driver behaviour monitoring','Real-time operations dashboards'],
+    stats:[['10×','Faster Inventory Counts'],['99.1%','Scan Accuracy'],['50%','Dispatch Time Saved']],
+    cases:'Port Qasim logistics firm cut inventory cycle time from 3 days to 4 hours using Krucial vision AI.',
+  },
+  {
+    id:'health', icon:'Activity', title:'Healthcare', tag:'MedTech AI',
+    hero:'Digitise patient records, automate administration and protect facilities with healthcare-grade AI.',
+    solutions:['Medical record digitisation (OCR)','Patient monitoring IoT','Hospital access & CCTV AI','Clinical document automation','Compliance & audit reporting'],
+    stats:[['2.4M','Records Digitised'],['99.1%','Extraction Accuracy'],['80%','Admin Time Saved']],
+    cases:'Teaching hospital digitised 20 years of patient records in 6 weeks — now fully searchable and integrated with HIS.',
+  },
+  {
+    id:'banking', icon:'Landmark', title:'Banking & Finance', tag:'FinTech AI',
+    hero:'Automate compliance, detect fraud in real time and secure every branch with AI built for finance.',
+    solutions:['Real-time fraud detection','KYC & AML automation','Document processing pipelines','Branch CCTV AI & ATM security','Regulatory reporting automation'],
+    stats:[['< 1s','Fraud Detection Time'],['90%','KYC Processing Speed'],['0.02%','False Positive Rate']],
+    cases:'Tier-2 bank automated 95% of KYC document processing — cutting account opening from 3 days to under 4 hours.',
+  },
+  {
+    id:'construction', icon:'HardHat', title:'Real Estate & Construction', tag:'ConTech',
+    hero:'Keep your sites safe, compliant and on schedule with AI-powered monitoring and analytics.',
+    solutions:['PPE compliance detection (AI)','Site progress monitoring (drone AI)','Worker attendance automation','Equipment tracking IoT','Safety incident reporting'],
+    stats:[['92%','PPE Compliance Rate'],['60%','Fewer Safety Incidents'],['Real-time','Zone Breach Alerts']],
+    cases:'High-rise project in Karachi achieved 92% PPE compliance within 2 weeks of Krucial safety AI deployment.',
+  },
+];
+
+function IndustryCard({ ind, theme: t, visible, delay }) {
+  const [exp, setExp] = React.useState(false);
+  return (
+    <div style={{ background:t.bgAlt, border:`1px solid ${t.accent}22`, borderRadius:16, overflow:'hidden', opacity:visible?1:0, transform:visible?'none':'translateY(30px)', transition:`all 0.6s ease ${delay}s` }}>
+      <div style={{ padding:'28px 28px 20px' }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:16 }}>
+          <div style={{ width:48,height:48,borderRadius:10,background:`${t.accent}18`,border:`1px solid ${t.accent}33`,display:'flex',alignItems:'center',justifyContent:'center',color:t.accent }}><Icon name={ind.icon} size={22} color={t.accent}/></div>
+          <span style={{ background:`${t.accent}18`, color:t.accent, borderRadius:4, padding:'3px 10px', fontSize:10, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif", letterSpacing:'0.08em', textTransform:'uppercase' }}>{ind.tag}</span>
+        </div>
+        <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:20, fontWeight:800, color:t.text, letterSpacing:'-0.02em', marginBottom:10 }}>{ind.title}</h3>
+        <p style={{ color:t.textMuted, fontSize:14, lineHeight:1.65, marginBottom:20 }}>{ind.hero}</p>
+
+        {/* Stats */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:8, marginBottom:20 }}>
+          {ind.stats.map(([v,l])=>(
+            <div key={l} style={{ textAlign:'center', padding:'10px 4px', background:t.bg, borderRadius:8, border:`1px solid ${t.accent}18` }}>
+              <div style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:16, fontWeight:800, color:t.accent }}>{v}</div>
+              <div style={{ color:t.textMuted, fontSize:9, marginTop:3, lineHeight:1.3 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Expand toggle */}
+        <button onClick={()=>setExp(!exp)} style={{ background:'none', border:`1px solid ${t.accent}33`, borderRadius:8, padding:'8px 16px', color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:12, fontWeight:600, cursor:'pointer', transition:'all 0.2s', width:'100%' }}>
+          {exp ? 'Show Less ↑' : 'View Solutions & Case Study ↓'}
+        </button>
+      </div>
+
+      {exp && (
+        <div style={{ borderTop:`1px solid ${t.accent}18`, padding:'20px 28px 28px', background:t.bg }}>
+          <div style={{ marginBottom:16 }}>
+            <div style={{ color:t.textMuted, fontSize:11, fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', fontFamily:"'Space Grotesk',sans-serif", marginBottom:10 }}>Solutions We Deploy</div>
+            {ind.solutions.map(s=>(
+              <div key={s} style={{ display:'flex', gap:8, alignItems:'flex-start', marginBottom:7 }}>
+                <div style={{ width:5, height:5, borderRadius:'50%', background:t.accent, marginTop:5, flexShrink:0 }} />
+                <span style={{ color:t.text, fontSize:13, lineHeight:1.5 }}>{s}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ background:`${t.accent}0A`, border:`1px solid ${t.accent}22`, borderRadius:10, padding:'14px 16px' }}>
+            <div style={{ color:t.accent, fontSize:10, fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:6, fontFamily:"'Space Grotesk',sans-serif" }}>Case Study</div>
+            <p style={{ color:t.textMuted, fontSize:13, lineHeight:1.6 }}>{ind.cases}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  const [themeKey,setThemeKey]=React.useState(getSavedTheme);
+  const [demo,setDemo]=React.useState(false);
+  const t=THEMES[themeKey];
+  React.useEffect(()=>{document.body.style.background=t.bg;},[t.bg]);
+  const [ref,vis]=useInView(0.05);
+  return (
+    <div style={{background:t.bg,minHeight:'100vh'}}>
+      <SharedNavbar theme={t} onDemo={()=>setDemo(true)}/>
+      <PageHero theme={t} badge="Industries We Serve" title="Sector-Specific" highlight="AI Intelligence" subtitle="Deep industry expertise across 6 verticals — every solution tuned to the unique challenges of your sector." cta="Discuss Your Industry" onCta={()=>setDemo(true)}/>
+      <section style={{padding:'80px 5%',background:t.bg}}>
+        <div style={{maxWidth:1280,margin:'0 auto'}}>
+          <div ref={ref} style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:24}} className="grid-2">
+            {INDUSTRIES.map((ind,i)=><IndustryCard key={ind.id} ind={ind} theme={t} visible={vis} delay={i*0.08}/>)}
+          </div>
+        </div>
+      </section>
+      <section style={{background:t.bgAlt,padding:'80px 5%',borderTop:`1px solid ${t.accent}22`}}>
+        <div style={{maxWidth:700,margin:'0 auto',textAlign:'center'}}>
+          <SectionLabel theme={t} label="Don't see your industry?"/>
+          <h2 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:'clamp(26px,3.5vw,40px)',fontWeight:800,color:t.text,letterSpacing:'-0.03em',marginBottom:16}}>We Work Across <span style={{color:t.accent}}>All Sectors</span></h2>
+          <p style={{color:t.textMuted,fontSize:16,lineHeight:1.7,marginBottom:32}}>If your industry isn't listed, we still want to hear about your challenge. Our AI engineers have solved problems across manufacturing, agriculture, education, telecom and more.</p>
+          <button onClick={()=>setDemo(true)} style={{background:t.accent,color:t.accentText||'#fff',border:'none',borderRadius:8,padding:'15px 32px',fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:15,cursor:'pointer',boxShadow:`0 0 40px ${t.accent}44`}}>Talk to an Expert →</button>
+        </div>
+      </section>
+      <SharedFooter theme={t}/>
+      {demo&&<SharedDemoModal theme={t} onClose={()=>setDemo(false)}/>}
+      <SharedThemeSwitcher current={themeKey} onChange={k=>{setThemeKey(k);saveTheme(k);}}/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body></html>

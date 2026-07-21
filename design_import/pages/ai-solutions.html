@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Solutions — Krucial Systems</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../shared/icons.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}body{overflow-x:hidden;}
+    @media(max-width:900px){.nav-links{display:none!important}.hamburger{display:flex!important;flex-direction:column}.grid-2{grid-template-columns:1fr!important}.grid-3{grid-template-columns:1fr 1fr!important}.grid-4{grid-template-columns:1fr 1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}.hero-split{grid-template-columns:1fr!important}}
+    @media(max-width:600px){.grid-3,.grid-4,.footer-grid{grid-template-columns:1fr!important}}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060F}::-webkit-scrollbar-thumb{background:#0A84FF55;border-radius:3px}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script src="../shared/themes.js"></script>
+<script type="text/babel" src="../shared/layout.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ── NEURAL NETWORK HERO VISUAL ──────────────────────────────────────────────
+function NeuralHeroVisual({ theme: t }) {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current; if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animId, phase = 0;
+    const layers = [[.1],[.25,.45,.65,.85],[.2,.4,.6,.8],[.3,.5,.7],[.5]];
+    const xPos = [0.08, 0.28, 0.52, 0.74, 0.94];
+    const nodes = layers.flatMap((ys, li) => ys.map((y, ni) => ({ x: xPos[li], y, li, ni, id: `${li}-${ni}` })));
+    const edges = [];
+    nodes.forEach(n => nodes.filter(m => m.li === n.li + 1).forEach(m => edges.push([n, m])));
+
+    function resize() {
+      canvas.width = canvas.offsetWidth * devicePixelRatio;
+      canvas.height = canvas.offsetHeight * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    }
+    function draw() {
+      const w = canvas.offsetWidth, h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
+      phase += 0.02;
+      edges.forEach(([a, b]) => {
+        const sig = Math.sin(phase - a.x * 12) * 0.5 + 0.5;
+        const grd = ctx.createLinearGradient(a.x*w, a.y*h, b.x*w, b.y*h);
+        grd.addColorStop(0, t.accent + Math.floor(sig * 80 + 10).toString(16).padStart(2,'0'));
+        grd.addColorStop(1, t.accent + Math.floor(sig * 50 + 10).toString(16).padStart(2,'0'));
+        ctx.beginPath(); ctx.moveTo(a.x*w, a.y*h); ctx.lineTo(b.x*w, b.y*h);
+        ctx.strokeStyle = grd; ctx.lineWidth = 1.2; ctx.stroke();
+      });
+      nodes.forEach(n => {
+        const pulse = Math.sin(phase - n.x * 8 + n.y * 4) * 0.5 + 0.5;
+        const r = 6 + pulse * 4;
+        const grd = ctx.createRadialGradient(n.x*w, n.y*h, 0, n.x*w, n.y*h, r*3);
+        grd.addColorStop(0, t.accent + 'cc');
+        grd.addColorStop(1, t.accent + '00');
+        ctx.beginPath(); ctx.arc(n.x*w, n.y*h, r*3, 0, Math.PI*2);
+        ctx.fillStyle = grd; ctx.fill();
+        ctx.beginPath(); ctx.arc(n.x*w, n.y*h, r, 0, Math.PI*2);
+        ctx.fillStyle = t.accent + Math.floor(pulse * 200 + 55).toString(16).padStart(2,'0');
+        ctx.fill();
+        // label on output node
+        if (n.li === 4) {
+          const labels = ['Classify', 'Predict', 'Detect'];
+          const lbl = labels[n.ni] || '';
+          ctx.fillStyle = t.accent; ctx.font = `bold ${Math.round(w*0.022)}px Space Grotesk, sans-serif`;
+          ctx.fillText(lbl, n.x*w + 12, n.y*h + 4);
+        }
+        if (n.li === 0) {
+          const labels = ['Data'];
+          ctx.fillStyle = t.textMuted; ctx.font = `${Math.round(w*0.018)}px Space Grotesk, sans-serif`;
+          ctx.fillText(labels[0] || '', n.x*w - 32, n.y*h + 4);
+        }
+      });
+      // floating accuracy badge
+      const bx = w*0.5, by = h*0.06;
+      ctx.fillStyle = t.accent + '22';
+      ctx.beginPath(); ctx.roundRect(bx-52, by-12, 104, 26, 6); ctx.fill();
+      ctx.fillStyle = t.accent; ctx.font = `bold ${Math.round(w*0.022)}px Space Grotesk`;
+      ctx.textAlign = 'center'; ctx.fillText('98.4% Accuracy', bx, by+6); ctx.textAlign = 'left';
+      animId = requestAnimationFrame(draw);
+    }
+    resize(); draw();
+    window.addEventListener('resize', resize);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
+  }, [t.accent, t.textMuted]);
+
+  return (
+    <div style={{ position:'relative', borderRadius:20, overflow:'hidden', background:`${t.accent}08`, border:`1px solid ${t.accent}22` }}>
+      <canvas ref={canvasRef} style={{ width:'100%', height:380, display:'block' }} />
+      <div style={{ position:'absolute', bottom:16, left:16, right:16, display:'flex', gap:8, flexWrap:'wrap' }}>
+        {['Input Layer','Hidden × 2','Output Layer'].map((l,i) => (
+          <span key={l} style={{ background:`${t.accent}22`, color:t.accent, borderRadius:6, padding:'4px 12px', fontSize:11, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif" }}>{l}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── MODEL ACCURACY GAUGE ──────────────────────────────────────────────────────
+function AccuracyGauge({ theme: t, value, label }) {
+  const [v, setV] = useState(0);
+  useEffect(() => { const t2 = setTimeout(() => setV(value), 400); return () => clearTimeout(t2); }, [value]);
+  const angle = (v / 100) * 180 - 90;
+  const r = 44; const cx = 60; const cy = 60;
+  const arcX = cx + r * Math.cos((angle - 90) * Math.PI / 180);
+  const arcY = cy + r * Math.sin((angle - 90) * Math.PI / 180);
+  return (
+    <div style={{ textAlign:'center', padding:'24px 16px', background:t.bgAlt, border:`1px solid ${t.accent}22`, borderRadius:14 }}>
+      <svg viewBox="0 0 120 70" style={{ width:'100%', maxWidth:120 }}>
+        <path d={`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}`} fill="none" stroke={`${t.accent}22`} strokeWidth="8" strokeLinecap="round"/>
+        <path d={`M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${arcX} ${arcY}`} fill="none" stroke={t.accent} strokeWidth="8" strokeLinecap="round" style={{ transition:'all 1.2s ease' }}/>
+        <text x={cx} y={cy-4} textAnchor="middle" fill={t.accent} fontSize="14" fontWeight="800" fontFamily="Space Grotesk">{v}%</text>
+      </svg>
+      <div style={{ color:t.text, fontFamily:"'Space Grotesk',sans-serif", fontSize:13, fontWeight:600, marginTop:4 }}>{label}</div>
+    </div>
+  );
+}
+
+function App() {
+  const [themeKey, setThemeKey] = useState(getSavedTheme);
+  const [demo, setDemo] = useState(false);
+  const t = THEMES[themeKey];
+  useEffect(() => { document.body.style.background = t.bg; }, [t.bg]);
+  const [featRef, featVis] = useInView(0.1);
+  const [ucRef, ucVis] = useInView(0.1);
+
+  const features = [
+    ['Brain','Custom ML Models','Supervised, unsupervised and reinforcement learning — trained on your proprietary data with full model ownership.'],
+    ['MessageSquare','NLP & Text AI','Document classification, entity extraction, sentiment analysis, semantic search and intelligent chatbots.'],
+    ['Eye','Computer Vision','Object detection, image segmentation, defect detection and visual QA pipelines for production lines.'],
+    ['TrendingUp','Predictive Analytics','Demand forecasting, churn prediction, risk scoring, anomaly detection and recommendation engines.'],
+    ['RefreshCw','MLOps & Retraining','Model versioning, drift detection, automated retraining pipelines, A/B testing and performance dashboards.'],
+    ['Link','API Integration','Production REST APIs, webhooks, batch inference endpoints — integrate AI into any existing system.'],
+  ];
+
+  return (
+    <div style={{ background:t.bg, minHeight:'100vh', fontFamily:"'Inter',sans-serif" }}>
+      <SharedNavbar theme={t} onDemo={() => setDemo(true)} />
+
+      {/* HERO */}
+      <section style={{ minHeight:'100vh', display:'flex', alignItems:'center', background:t.bg, position:'relative', overflow:'hidden', paddingTop:80 }}>
+        <div style={{ position:'absolute', inset:0, backgroundImage:`linear-gradient(${t.accent}06 1px,transparent 1px),linear-gradient(90deg,${t.accent}06 1px,transparent 1px)`, backgroundSize:'50px 50px' }} />
+        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'40%', background:`linear-gradient(to top, ${t.bg}, transparent)` }} />
+        <div style={{ maxWidth:1280, margin:'0 auto', padding:'40px 5% 80px', width:'100%', position:'relative' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:72, alignItems:'center' }} className="hero-split">
+            <div>
+              <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:`${t.accent}18`, border:`1px solid ${t.accent}44`, borderRadius:100, padding:'6px 16px', marginBottom:24 }}>
+                <div style={{ width:6, height:6, borderRadius:'50%', background:t.accent, boxShadow:`0 0 8px ${t.accent}` }} />
+                <span style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase' }}>AI & Machine Learning</span>
+              </div>
+              <h1 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:'clamp(36px,4.5vw,62px)', fontWeight:800, color:t.text, lineHeight:1.05, letterSpacing:'-0.03em', marginBottom:24 }}>
+                AI That Learns<br /><span style={{ color:t.accent }}>Your Business.</span><br />Not Someone Else's.
+              </h1>
+              <p style={{ color:t.textMuted, fontSize:17, lineHeight:1.75, maxWidth:460, marginBottom:36 }}>
+                We build custom machine learning models, NLP systems and computer vision pipelines — trained on your data, deployed in your environment, delivering measurable outcomes.
+              </p>
+              <div style={{ display:'flex', gap:12, flexWrap:'wrap', marginBottom:48 }}>
+                <button onClick={() => setDemo(true)} style={{ background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:8, padding:'14px 28px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:15, cursor:'pointer', boxShadow:`0 0 30px ${t.accent}44` }}>
+                  Get a Free Consultation
+                </button>
+                <a href="services.html" style={{ display:'inline-flex', alignItems:'center', color:t.text, border:`1px solid ${t.accent}44`, borderRadius:8, padding:'14px 24px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:15, textDecoration:'none' }}>← All Services</a>
+              </div>
+              {/* Gauges */}
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12 }}>
+                <AccuracyGauge theme={t} value={98} label="Model Accuracy" />
+                <AccuracyGauge theme={t} value={94} label="Precision Score" />
+                <AccuracyGauge theme={t} value={97} label="Recall Rate" />
+              </div>
+            </div>
+            <div><NeuralHeroVisual theme={t} /></div>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section style={{ background:t.bgAlt, padding:'90px 5%', borderTop:`1px solid ${t.accent}22` }}>
+        <div style={{ maxWidth:1280, margin:'0 auto' }}>
+          <div style={{ textAlign:'center', marginBottom:56 }}>
+            <SectionLabel theme={t} label="Capabilities" />
+            <SectionHeading theme={t} sub="Every system engineered end-to-end for your industry context.">What We Build</SectionHeading>
+          </div>
+          <div ref={featRef} style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:20 }} className="grid-3">
+            {features.map(([icon, title, desc], i) => (
+              <FeatureCard key={title} theme={t} icon={icon} title={title} desc={desc} delay={i*0.08} visible={featVis} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* USE CASES with visual */}
+      <section style={{ background:t.bg, padding:'90px 5%' }}>
+        <div style={{ maxWidth:1280, margin:'0 auto' }}>
+          <div style={{ textAlign:'center', marginBottom:56 }}>
+            <SectionLabel theme={t} label="Applications" />
+            <SectionHeading theme={t} sub="Production AI deployments across industries.">Where We Deploy It</SectionHeading>
+          </div>
+          <div ref={ucRef} style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:20 }} className="grid-2">
+            {[
+              ['Factory','Manufacturing QA','AI visual inspection on production lines detecting micro-defects, surface anomalies and dimensional variance — 99.1% catch rate replacing manual inspection.','Manufacturing','99.1% defect detection'],
+              ['Landmark','Financial Risk','Real-time loan default prediction and fraud probability scoring integrated into core banking flows with < 50ms inference latency.','Banking','< 50ms inference'],
+              ['ShoppingCart','Retail Demand Forecasting','SKU-level demand prediction reducing overstock by 30% and eliminating stockouts on top 500 SKUs across multi-branch retail chains.','Retail','30% overstock reduction'],
+              ['Activity','Medical NLP','Clinical note processing — extracting diagnoses, medications and procedures from free text at 10× human speed with 98% accuracy.','Healthcare','98% extraction accuracy'],
+            ].map(([icon, title, desc, tag, stat], i) => (
+              <div key={title} style={{ background:t.bgAlt, border:`1px solid ${t.accent}22`, borderRadius:16, padding:'28px', opacity:ucVis?1:0, transform:ucVis?'none':'translateY(20px)', transition:`all 0.6s ease ${i*0.1}s` }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor=`${t.accent}55`; e.currentTarget.style.transform='translateY(-4px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor=`${t.accent}22`; e.currentTarget.style.transform='none'; }}>
+                <div style={{ display:'flex', justifyContent:'space-between', marginBottom:16, flexWrap:'wrap', gap:8 }}>
+                  <div style={{ width:44,height:44,borderRadius:10,background:`${t.accent}18`,border:`1px solid ${t.accent}33`,display:'flex',alignItems:'center',justifyContent:'center',color:t.accent }}><Icon name={icon} size={20} color={t.accent}/></div>
+                  <div style={{ display:'flex', gap:8, alignItems:'center', flexWrap:'wrap' }}>
+                    <span style={{ background:`${t.accent}18`, color:t.accent, borderRadius:4, padding:'2px 10px', fontSize:10, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif", textTransform:'uppercase' }}>{tag}</span>
+                    <span style={{ background:`${t.accent}33`, color:t.accent, borderRadius:4, padding:'2px 10px', fontSize:11, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif" }}>{stat}</span>
+                  </div>
+                </div>
+                <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:18, fontWeight:700, color:t.text, marginBottom:10 }}>{title}</h3>
+                <p style={{ color:t.textMuted, fontSize:14, lineHeight:1.65 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section style={{ background:t.bgAlt, padding:'90px 5%', borderTop:`1px solid ${t.accent}22` }}>
+        <div style={{ maxWidth:1280, margin:'0 auto' }}>
+          <div style={{ textAlign:'center', marginBottom:56 }}>
+            <SectionLabel theme={t} label="Our Process" />
+            <SectionHeading theme={t}>From Raw Data to Deployed Model</SectionHeading>
+          </div>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:0, position:'relative' }} className="grid-4">
+            <div style={{ position:'absolute', top:32, left:'12.5%', right:'12.5%', height:1, background:`linear-gradient(90deg,transparent,${t.accent}44,transparent)` }} />
+            {[['01','Data Audit','Assess quality, volume, labelling needs and define optimal model strategy.'],['02','Design & Train','Architecture selection, feature engineering, iterative training and validation.'],['03','Test & Deploy','Rigorous testing, bias checks, then production deployment via API or on-premise.'],['04','Monitor & Retrain','Drift detection, automated retraining, A/B testing and performance dashboards.']].map(([n,title,desc]) => (
+              <div key={n} style={{ padding:'0 20px', textAlign:'center' }}>
+                <div style={{ width:64, height:64, borderRadius:'50%', background:t.bg, border:`2px solid ${t.accent}`, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 24px', zIndex:1, position:'relative' }}>
+                  <span style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:16, fontWeight:800, color:t.accent }}>{n}</span>
+                </div>
+                <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:17, fontWeight:700, color:t.text, marginBottom:10 }}>{title}</h3>
+                <p style={{ color:t.textMuted, fontSize:13, lineHeight:1.65 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{ background:t.bg, padding:'90px 5%' }}>
+        <div style={{ maxWidth:700, margin:'0 auto', textAlign:'center' }}>
+          <SectionLabel theme={t} label="Get Started" />
+          <h2 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:'clamp(28px,4vw,44px)', fontWeight:800, color:t.text, letterSpacing:'-0.03em', marginBottom:20 }}>Ready to Deploy <span style={{ color:t.accent }}>Custom AI?</span></h2>
+          <p style={{ color:t.textMuted, fontSize:16, lineHeight:1.7, marginBottom:36 }}>Start with a free consultation — our ML engineers will map your data landscape and propose a solution within 48 hours.</p>
+          <div style={{ display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap' }}>
+            <button onClick={() => setDemo(true)} style={{ background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:8, padding:'15px 32px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:15, cursor:'pointer', boxShadow:`0 0 40px ${t.accent}44` }}>Book a Free Demo</button>
+            <a href="services.html" style={{ display:'inline-flex', alignItems:'center', color:t.accent, border:`1px solid ${t.accent}55`, borderRadius:8, padding:'15px 32px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:15, textDecoration:'none' }}>← All Services</a>
+          </div>
+        </div>
+      </section>
+
+      <SharedFooter theme={t} />
+      {demo && <SharedDemoModal theme={t} onClose={() => setDemo(false)} />}
+      <SharedThemeSwitcher current={themeKey} onChange={k => { setThemeKey(k); saveTheme(k); }} />
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body></html>

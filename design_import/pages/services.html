@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Krucial Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../shared/icons.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}body{overflow-x:hidden;}
+    @media(max-width:900px){.nav-links{display:none!important}.hamburger{display:flex!important;flex-direction:column}.grid-3{grid-template-columns:1fr 1fr!important}.grid-4{grid-template-columns:1fr 1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}}
+    @media(max-width:600px){.grid-3{grid-template-columns:1fr!important}.grid-4{grid-template-columns:1fr!important}.footer-grid{grid-template-columns:1fr!important}}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060F}::-webkit-scrollbar-thumb{background:#0A84FF55;border-radius:3px}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script src="../shared/themes.js"></script>
+<script type="text/babel" src="../shared/layout.jsx"></script>
+<script type="text/babel">
+
+const SERVICES = [
+  { slug:'ai-solutions',        icon:'Brain', title:'AI Solutions',           color:'#0A84FF', desc:'Custom machine learning, NLP, computer vision and predictive analytics built end-to-end for your business.', features:['Custom ML Models','Natural Language Processing','Computer Vision','Predictive Analytics','Model Monitoring'] },
+  { slug:'cctv-ai',             icon:'Camera', title:'CCTV AI Systems',        color:'#00C896', desc:'Transform your camera network into an intelligent security and analytics platform with real-time detection.', features:['Facial Recognition','Intrusion Detection','PPE Compliance','Crowd Analytics','License Plate Recognition'] },
+  { slug:'automation',          icon:'GitMerge', title:'Automation',             color:'#9B6DFF', desc:'Eliminate repetitive tasks with intelligent RPA, workflow orchestration and AI-driven process intelligence.', features:['Robotic Process Automation','Workflow Orchestration','Smart Dashboards','Process Mining','Document Automation'] },
+  { slug:'data-digitisation',   icon:'FileText', title:'Data Digitisation',      color:'#E8A020', desc:'Convert legacy documents and paper records into structured digital data using AI-powered OCR and extraction.', features:['AI-Powered OCR','Form Extraction','Data Validation','Legacy Migration','Audit Trails'] },
+  { slug:'iot-smart-systems',   icon:'Wifi', title:'IoT & Smart Systems',    color:'#FF6B6B', desc:'Connect your physical infrastructure — smart offices, energy systems, and sensor networks on one platform.', features:['Smart Office Automation','Energy Monitoring','Asset Tracking','Environmental Sensors','Remote Management'] },
+  { slug:'cloud-infrastructure',icon:'Cloud', title:'Cloud & Infrastructure', color:'#4ECDC4', desc:'Enterprise-grade private cloud, server rooms, and hybrid deployments with local support and data sovereignty.', features:['Private Cloud','Server Room Design','Hybrid Deployment','Disaster Recovery','24/7 Monitoring'] },
+];
+
+function ServiceCard({ svc, theme: t }) {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <div onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{ background:hov?t.bgCard:t.bgAlt, border:`1px solid ${hov?svc.color+'66':t.accent+'22'}`, borderRadius:16, padding:'36px 28px', transition:'all 0.3s', transform:hov?'translateY(-6px)':'none', boxShadow:hov?`0 20px 60px ${svc.color}22`:'none' }}>
+      <div style={{ width:52,height:52,borderRadius:12,background:`${svc.color}22`,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16 }}><Icon name={svc.icon} size={26} color={svc.color}/></div>
+      <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:22, fontWeight:800, color:t.text, letterSpacing:'-0.02em', marginBottom:12 }}>{svc.title}</h3>
+      <p style={{ color:t.textMuted, fontSize:14, lineHeight:1.65, marginBottom:20 }}>{svc.desc}</p>
+      <ul style={{ listStyle:'none', marginBottom:24 }}>
+        {svc.features.map(f=>(
+          <li key={f} style={{ display:'flex', alignItems:'center', gap:8, color:t.textMuted, fontSize:13, marginBottom:6 }}>
+            <span style={{ width:5, height:5, borderRadius:'50%', background:svc.color, flexShrink:0, display:'inline-block' }}/>
+            {f}
+          </li>
+        ))}
+      </ul>
+      <a href={`${svc.slug}.html`} style={{ display:'inline-flex', alignItems:'center', gap:6, color:svc.color, fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:14, textDecoration:'none' }}>
+        Explore Service →
+      </a>
+    </div>
+  );
+}
+
+function App() {
+  const [themeKey,setThemeKey]=React.useState(getSavedTheme);
+  const [demo,setDemo]=React.useState(false);
+  const t=THEMES[themeKey];
+  React.useEffect(()=>{document.body.style.background=t.bg;},[t.bg]);
+  const [ref,visible]=useInView(0.1);
+  return (
+    <div style={{background:t.bg,minHeight:'100vh'}}>
+      <SharedNavbar theme={t} onDemo={()=>setDemo(true)}/>
+      <PageHero theme={t} badge="Our Expertise" title="Six Practices." highlight="One Partner." subtitle="From AI models to smart infrastructure — we deliver complete, end-to-end technology solutions built for your industry." cta="Book a Free Consultation" onCta={()=>setDemo(true)}/>
+      <section style={{padding:'80px 5%',background:t.bg}}>
+        <div style={{maxWidth:1280,margin:'0 auto'}}>
+          <div ref={ref} style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:24}} className="grid-3">
+            {SERVICES.map((svc,i)=>(
+              <div key={svc.slug} style={{opacity:visible?1:0,transform:visible?'none':'translateY(30px)',transition:`all 0.6s ease ${i*0.08}s`}}>
+                <ServiceCard svc={svc} theme={t}/>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <SharedFooter theme={t}/>
+      {demo&&<SharedDemoModal theme={t} onClose={()=>setDemo(false)}/>}
+      <SharedThemeSwitcher current={themeKey} onChange={k=>{setThemeKey(k);saveTheme(k);}}/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body></html>

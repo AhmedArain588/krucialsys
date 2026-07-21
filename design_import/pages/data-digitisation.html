@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Data Digitisation — Krucial Systems</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../shared/icons.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{overflow-x:hidden;}@media(max-width:900px){.nav-links{display:none!important}.hamburger{display:flex!important;flex-direction:column}.hero-split{grid-template-columns:1fr!important}.grid-2{grid-template-columns:1fr!important}.grid-3{grid-template-columns:1fr 1fr!important}.grid-4{grid-template-columns:1fr 1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}}@media(max-width:600px){.grid-3,.grid-4,.footer-grid{grid-template-columns:1fr!important}}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060F}::-webkit-scrollbar-thumb{background:#0A84FF55;border-radius:3px}</style>
+</head><body><div id="root"></div>
+<script src="../shared/themes.js"></script>
+<script type="text/babel" src="../shared/layout.jsx"></script>
+<script type="text/babel">
+
+const { useState, useEffect, useRef } = React;
+
+function ScannerVisual({ theme: t }) {
+  const [scanY, setScanY] = useState(0);
+  const [extracted, setExtracted] = useState([]);
+  const fields = [
+    { label:'Patient Name', value:'Ahmed Khan', y:22 },
+    { label:'DOB', value:'12/03/1985', y:34 },
+    { label:'Diagnosis', value:'Hypertension', y:46 },
+    { label:'Doctor ID', value:'DR-0042', y:58 },
+  ];
+  useEffect(() => {
+    let y = 0; let dir = 1;
+    const id = setInterval(() => {
+      y += dir * 1.2;
+      if (y > 100) { dir = -1; }
+      if (y < 0) { dir = 1; }
+      setScanY(y);
+      const revealed = fields.filter(f => f.y < y);
+      setExtracted(revealed.map(f => f.label));
+    }, 40);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div style={{ background:t.bgAlt, border:`1px solid ${t.accent}33`, borderRadius:16, padding:24 }}>
+      <div style={{ display:'flex', justifyContent:'space-between', marginBottom:20 }}>
+        <span style={{ color:t.text, fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:14 }}>AI-OCR Processing Engine</span>
+        <span style={{ color:t.accent, fontSize:11, background:`${t.accent}22`, borderRadius:100, padding:'3px 10px', fontWeight:700 }}>SCANNING</span>
+      </div>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:16 }}>
+        {/* Source document */}
+        <div style={{ position:'relative', background:t.bg, border:`1px solid ${t.accent}22`, borderRadius:10, padding:14, overflow:'hidden', minHeight:160 }}>
+          <div style={{ color:t.textMuted, fontSize:9, fontFamily:"'Space Grotesk',sans-serif", letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:10 }}>Source Document</div>
+          {fields.map(f => (
+            <div key={f.label} style={{ marginBottom:7 }}>
+              <div style={{ height:4, background:`${t.accent}18`, borderRadius:2, marginBottom:3 }}/>
+              <div style={{ height:4, background:`${t.accent}10`, borderRadius:2, width:'60%' }}/>
+            </div>
+          ))}
+          {/* Scanner line */}
+          <div style={{ position:'absolute', left:0, right:0, top:`${scanY}%`, height:2, background:`linear-gradient(90deg,transparent,${t.accent},transparent)`, boxShadow:`0 0 8px ${t.accent}`, pointerEvents:'none' }}/>
+          {/* Highlight boxes */}
+          {fields.filter(f => f.y < scanY).map(f => (
+            <div key={f.label} style={{ position:'absolute', left:10, right:10, top:`${f.y - 2}%`, height:'10%', border:`1px solid ${t.accent}66`, borderRadius:2, background:`${t.accent}08` }}/>
+          ))}
+        </div>
+        {/* Extracted data */}
+        <div style={{ background:t.bg, border:`1px solid ${t.accent}22`, borderRadius:10, padding:14 }}>
+          <div style={{ color:t.textMuted, fontSize:9, fontFamily:"'Space Grotesk',sans-serif", letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:10 }}>Extracted Fields</div>
+          {fields.map(f => (
+            <div key={f.label} style={{ marginBottom:8, opacity: extracted.includes(f.label) ? 1 : 0.2, transition:'opacity 0.4s' }}>
+              <div style={{ color:t.textMuted, fontSize:9, fontFamily:"'Space Grotesk',sans-serif", marginBottom:2 }}>{f.label}</div>
+              <div style={{ color:t.accent, fontSize:12, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif" }}>{f.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:8 }}>
+        {[['99.2%','Accuracy'],['2.4M','Records/Project'],['< 1s','Per Document']].map(([v,l]) => (
+          <div key={l} style={{ background:t.bg, border:`1px solid ${t.accent}18`, borderRadius:8, padding:'10px', textAlign:'center' }}>
+            <div style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:16, fontWeight:800 }}>{v}</div>
+            <div style={{ color:t.textMuted, fontSize:9, marginTop:3 }}>{l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [themeKey, setThemeKey] = useState(getSavedTheme);
+  const [demo, setDemo] = useState(false);
+  const t = THEMES[themeKey];
+  useEffect(() => { document.body.style.background = t.bg; }, [t.bg]);
+  const [featRef, featVis] = useInView(0.1);
+  const [ucRef, ucVis] = useInView(0.1);
+
+  const features = [
+    ['Scan','AI-Powered OCR','State-of-the-art recognition handling handwriting, stamps, degraded scans, Urdu/Arabic text and multi-column layouts.'],
+    ['FileText','Intelligent Extraction','Automatically extract named fields from forms, invoices, contracts and medical records — no templates required.'],
+    ['CheckCircle','Data Validation','Rule-based and AI validation catches errors, flags anomalies and ensures data integrity before committing to storage.'],
+    ['Database','Legacy Migration','Migrate from paper archives, aging databases and disconnected systems into modern cloud or on-premise repositories.'],
+    ['Lock','Secure Storage','AES-256 encrypted, access-controlled document repositories with version history, audit logs and role-based permissions.'],
+    ['Globe','Search & Retrieval','Full-text search, metadata tagging and AI semantic search across millions of digitised documents in milliseconds.'],
+  ];
+
+  return (
+    <div style={{ background:t.bg, minHeight:'100vh' }}>
+      <SharedNavbar theme={t} onDemo={() => setDemo(true)}/>
+      <section style={{ minHeight:'100vh', display:'flex', alignItems:'center', background:t.bg, position:'relative', overflow:'hidden', paddingTop:80 }}>
+        <div style={{ position:'absolute', inset:0, backgroundImage:`linear-gradient(${t.accent}06 1px,transparent 1px),linear-gradient(90deg,${t.accent}06 1px,transparent 1px)`, backgroundSize:'44px 44px' }}/>
+        <div style={{ position:'absolute', top:'30%', right:'5%', width:350, height:350, borderRadius:'50%', background:`${t.accent}08`, filter:'blur(70px)' }}/>
+        <div style={{ maxWidth:1280, margin:'0 auto', padding:'40px 5% 80px', width:'100%', position:'relative' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:64, alignItems:'center' }} className="hero-split">
+            <div>
+              <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:`${t.accent}18`, border:`1px solid ${t.accent}44`, borderRadius:100, padding:'6px 16px', marginBottom:24 }}>
+                <Icon name="Scan" size={12} color={t.accent}/>
+                <span style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase' }}>Data Digitisation</span>
+              </div>
+              <h1 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:'clamp(34px,4.5vw,60px)', fontWeight:800, color:t.text, lineHeight:1.05, letterSpacing:'-0.03em', marginBottom:24 }}>
+                Paper to Data.<br /><span style={{ color:t.accent }}>In Seconds.</span><br />At Any Scale.
+              </h1>
+              <p style={{ color:t.textMuted, fontSize:17, lineHeight:1.75, maxWidth:460, marginBottom:36 }}>
+                AI-powered OCR and intelligent extraction converts your paper records, legacy files and unstructured documents into structured, searchable digital assets — at 10× human speed with 99.2% accuracy.
+              </p>
+              <div style={{ display:'flex', gap:12, flexWrap:'wrap', marginBottom:48 }}>
+                <button onClick={() => setDemo(true)} style={{ background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:8, padding:'14px 28px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:15, cursor:'pointer', boxShadow:`0 0 30px ${t.accent}44` }}>Get a Free Consultation</button>
+                <a href="services.html" style={{ display:'inline-flex', alignItems:'center', color:t.text, border:`1px solid ${t.accent}44`, borderRadius:8, padding:'14px 24px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:15, textDecoration:'none' }}>← All Services</a>
+              </div>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12 }}>
+                {[['99.2%','OCR Accuracy'],['10×','Faster Than Manual'],['2.4M','Docs Processed']].map(([v,l]) => (
+                  <div key={l} style={{ background:t.bgAlt, border:`1px solid ${t.accent}22`, borderRadius:10, padding:'16px', textAlign:'center' }}>
+                    <div style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:22, fontWeight:800 }}>{v}</div>
+                    <div style={{ color:t.textMuted, fontSize:11, marginTop:4 }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div><ScannerVisual theme={t}/></div>
+          </div>
+        </div>
+      </section>
+      <section style={{ background:t.bgAlt, padding:'90px 5%', borderTop:`1px solid ${t.accent}22` }}>
+        <div style={{ maxWidth:1280, margin:'0 auto' }}>
+          <div style={{ textAlign:'center', marginBottom:56 }}><SectionLabel theme={t} label="Capabilities"/><SectionHeading theme={t} sub="Full-stack digitisation from scan to search.">What We Digitise</SectionHeading></div>
+          <div ref={featRef} style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:20 }} className="grid-3">
+            {features.map(([icon,title,desc],i) => <FeatureCard key={title} theme={t} icon={icon} title={title} desc={desc} delay={i*0.08} visible={featVis}/>)}
+          </div>
+        </div>
+      </section>
+      <section style={{ background:t.bg, padding:'90px 5%' }}>
+        <div style={{ maxWidth:1280, margin:'0 auto' }}>
+          <div style={{ textAlign:'center', marginBottom:56 }}><SectionLabel theme={t} label="Applications"/><SectionHeading theme={t} sub="High-volume digitisation deployed across sectors.">Where We Deploy It</SectionHeading></div>
+          <div ref={ucRef} style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:20 }} className="grid-2">
+            {[
+              ['Activity','Hospital Records','2.4M patient records digitised in 6 weeks — now fully searchable, integrated with HIS and HIPAA-compliant.','Healthcare','99.1% accuracy'],
+              ['Landmark','Loan Document Processing','Bank mortgage applications digitised and validated in < 4 minutes vs. 2-day manual review — 95% staff time saved.','Banking','4 min processing'],
+              ['Building2','Government Archives','National archive digitisation converting 50 years of physical records into searchable repositories for 3 ministries.','Government','50 years digitised'],
+              ['FileText','Legal Document Management','Law firm case file digitisation with AI-powered clause extraction, contract intelligence and full-text search.','Legal','10× faster retrieval'],
+            ].map(([icon,title,desc,tag,stat],i) => (
+              <div key={title} style={{ background:t.bgAlt, border:`1px solid ${t.accent}22`, borderRadius:16, padding:'28px', opacity:ucVis?1:0, transform:ucVis?'none':'translateY(20px)', transition:`all 0.6s ease ${i*0.1}s` }}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=`${t.accent}55`;e.currentTarget.style.transform='translateY(-4px)';}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=`${t.accent}22`;e.currentTarget.style.transform='none';}}>
+                <div style={{ display:'flex', justifyContent:'space-between', marginBottom:16, flexWrap:'wrap', gap:8 }}>
+                  <div style={{ width:44, height:44, borderRadius:10, background:`${t.accent}18`, border:`1px solid ${t.accent}33`, display:'flex', alignItems:'center', justifyContent:'center' }}><Icon name={icon} size={20} color={t.accent}/></div>
+                  <div style={{ display:'flex', gap:8 }}>
+                    <span style={{ background:`${t.accent}18`, color:t.accent, borderRadius:4, padding:'2px 10px', fontSize:10, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif", textTransform:'uppercase' }}>{tag}</span>
+                    <span style={{ background:`${t.accent}33`, color:t.accent, borderRadius:4, padding:'2px 10px', fontSize:11, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif" }}>{stat}</span>
+                  </div>
+                </div>
+                <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:18, fontWeight:700, color:t.text, marginBottom:10 }}>{title}</h3>
+                <p style={{ color:t.textMuted, fontSize:14, lineHeight:1.65 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section style={{ background:t.bgAlt, padding:'80px 5%', borderTop:`1px solid ${t.accent}22` }}>
+        <div style={{ maxWidth:700, margin:'0 auto', textAlign:'center' }}>
+          <SectionLabel theme={t} label="Get Started"/>
+          <h2 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:'clamp(28px,4vw,44px)', fontWeight:800, color:t.text, letterSpacing:'-0.03em', marginBottom:20 }}>Ready to Go <span style={{ color:t.accent }}>Paperless?</span></h2>
+          <p style={{ color:t.textMuted, fontSize:16, lineHeight:1.7, marginBottom:36 }}>Send us a sample document — we will run a free accuracy test on your document type within 24 hours.</p>
+          <div style={{ display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap' }}>
+            <button onClick={() => setDemo(true)} style={{ background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:8, padding:'15px 32px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:15, cursor:'pointer', boxShadow:`0 0 40px ${t.accent}44` }}>Get a Free Sample Test</button>
+            <a href="services.html" style={{ display:'inline-flex', alignItems:'center', color:t.accent, border:`1px solid ${t.accent}55`, borderRadius:8, padding:'15px 32px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:15, textDecoration:'none' }}>← All Services</a>
+          </div>
+        </div>
+      </section>
+      <SharedFooter theme={t}/>{demo && <SharedDemoModal theme={t} onClose={() => setDemo(false)}/>}
+      <SharedThemeSwitcher current={themeKey} onChange={k=>{setThemeKey(k);saveTheme(k);}}/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body></html>

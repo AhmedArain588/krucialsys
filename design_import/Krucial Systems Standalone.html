@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krucial Systems — Intelligent AI Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <meta name="ext-resource-dependency" content="uploads/logo-1777108586958.png" data-resource-id="logo" />
+
+  <template id="__bundler_thumbnail" data-bg-color="#05060F">
+    <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+      <rect width="120" height="80" fill="#05060F"/>
+      <rect x="8" y="8" width="104" height="64" rx="4" fill="none" stroke="#0A84FF" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="30" cy="32" r="4" fill="#0A84FF" opacity="0.9"/>
+      <circle cx="55" cy="22" r="4" fill="#0A84FF" opacity="0.9"/>
+      <circle cx="80" cy="36" r="4" fill="#0A84FF" opacity="0.9"/>
+      <circle cx="45" cy="48" r="4" fill="#0A84FF" opacity="0.9"/>
+      <circle cx="70" cy="52" r="4" fill="#0A84FF" opacity="0.9"/>
+      <line x1="30" y1="32" x2="55" y2="22" stroke="#0A84FF" stroke-width="0.8" opacity="0.4"/>
+      <line x1="55" y1="22" x2="80" y2="36" stroke="#0A84FF" stroke-width="0.8" opacity="0.4"/>
+      <line x1="30" y1="32" x2="45" y2="48" stroke="#0A84FF" stroke-width="0.8" opacity="0.4"/>
+      <line x1="45" y1="48" x2="70" y2="52" stroke="#0A84FF" stroke-width="0.8" opacity="0.4"/>
+      <line x1="80" y1="36" x2="70" y2="52" stroke="#0A84FF" stroke-width="0.8" opacity="0.4"/>
+      <text x="60" y="70" font-family="sans-serif" font-size="7" fill="#0A84FF" text-anchor="middle" font-weight="bold" opacity="0.8">KRUCIAL SYSTEMS</text>
+    </svg>
+  </template>
+
+  <script src="shared/icons.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none !important; }
+      .hamburger { display: flex !important; flex-direction: column; }
+      .hero-grid { grid-template-columns: 1fr !important; }
+      .hero-visual { display: none !important; }
+      .services-grid { grid-template-columns: 1fr 1fr !important; }
+      .process-grid { grid-template-columns: 1fr 1fr !important; }
+      .process-line { display: none !important; }
+      .why-grid { grid-template-columns: 1fr !important; }
+      .industries-grid { grid-template-columns: 1fr 1fr !important; }
+      .cases-grid { grid-template-columns: 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr 1fr !important; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr !important; }
+      .industries-grid { grid-template-columns: 1fr !important; }
+      .process-grid { grid-template-columns: 1fr !important; }
+      .cases-grid { grid-template-columns: 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr !important; }
+    }
+
+    /* Parallax data attribute */
+    [data-parallax] { will-change: transform; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #05060F; }
+    ::-webkit-scrollbar-thumb { background: #0A84FF55; border-radius: 3px; }
+  </style>
+
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+      <rect width="120" height="80" fill="#05060F"/>
+      <circle cx="30" cy="30" r="4" fill="#0A84FF" opacity="0.8"/>
+      <circle cx="60" cy="20" r="4" fill="#0A84FF" opacity="0.8"/>
+      <circle cx="90" cy="35" r="4" fill="#0A84FF" opacity="0.8"/>
+      <circle cx="50" cy="50" r="4" fill="#0A84FF" opacity="0.8"/>
+      <line x1="30" y1="30" x2="60" y2="20" stroke="#0A84FF" stroke-width="1" opacity="0.4"/>
+      <line x1="60" y1="20" x2="90" y2="35" stroke="#0A84FF" stroke-width="1" opacity="0.4"/>
+      <line x1="50" y1="50" x2="30" y2="30" stroke="#0A84FF" stroke-width="1" opacity="0.4"/>
+      <text x="60" y="68" font-family="sans-serif" font-size="8" fill="#0A84FF" text-anchor="middle" font-weight="bold">KRUCIAL</text>
+    </svg>
+  </template>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="sections.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ── THEMES ───────────────────────────────────────────────────────────────────
+const THEMES = {
+  darkBlue: {
+    name: 'Dark Tech Blue',
+    bg: '#05060F',
+    bgAlt: '#080A18',
+    bgCard: '#0C0F1E',
+    text: '#EEF0FF',
+    textMuted: '#8892AA',
+    accent: '#0A84FF',
+    accentText: '#fff',
+    logoFilter: 'invert(1) brightness(1)',
+  },
+  midnightGreen: {
+    name: 'Midnight Green',
+    bg: '#050E0B',
+    bgAlt: '#071410',
+    bgCard: '#0A1A14',
+    text: '#E8F5F0',
+    textMuted: '#7A9990',
+    accent: '#00C896',
+    accentText: '#000',
+    logoFilter: 'invert(1)',
+  },
+  navyGold: {
+    name: 'Corporate Navy',
+    bg: '#F5F7FA',
+    bgAlt: '#EAEEF4',
+    bgCard: '#FFFFFF',
+    text: '#0D1528',
+    textMuted: '#5A6880',
+    accent: '#1A3A8F',
+    accentText: '#fff',
+    logoFilter: 'none',
+  },
+  darkViolet: {
+    name: 'Dark Violet',
+    bg: '#0A080F',
+    bgAlt: '#100C18',
+    bgCard: '#160F22',
+    text: '#F0ECFF',
+    textMuted: '#8878AA',
+    accent: '#9B6DFF',
+    accentText: '#fff',
+    logoFilter: 'invert(1)',
+  },
+  darkGold: {
+    name: 'Dark Gold',
+    bg: '#090807',
+    bgAlt: '#110F0C',
+    bgCard: '#181410',
+    text: '#F5F0E8',
+    textMuted: '#8A7D68',
+    accent: '#E8A020',
+    accentText: '#000',
+    logoFilter: 'invert(1)',
+  },
+};
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "darkBlue"
+}/*EDITMODE-END*/;
+
+// Floating theme switcher — always visible bottom-left
+function ThemeSwitcher({ current, onChange }) {
+  const [open, setOpen] = useState(false);
+  const swatches = [
+    { key: 'darkBlue',      color: '#0A84FF', label: 'Dark Blue' },
+    { key: 'midnightGreen', color: '#00C896', label: 'Midnight Green' },
+    { key: 'navyGold',      color: '#1A3A8F', label: 'Corporate Navy' },
+    { key: 'darkViolet',    color: '#9B6DFF', label: 'Dark Violet' },
+    { key: 'darkGold',      color: '#E8A020', label: 'Dark Gold' },
+  ];
+  const theme = THEMES[current];
+  return (
+    <div style={{ position: 'fixed', bottom: 28, left: 28, zIndex: 1500, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8 }}>
+      {open && (
+        <div style={{ background: theme.bgCard || theme.bgAlt, border: `1px solid ${theme.accent}44`, borderRadius: 14, padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: 8, boxShadow: `0 20px 60px #00000066` }}>
+          <div style={{ color: theme.textMuted, fontFamily: "'Space Grotesk', sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>Color Theme</div>
+          {swatches.map(s => (
+            <button key={s.key} onClick={() => { onChange(s.key); setOpen(false); }}
+              style={{ display: 'flex', alignItems: 'center', gap: 10, background: current === s.key ? `${s.color}22` : 'transparent', border: `1px solid ${current === s.key ? s.color : 'transparent'}`, borderRadius: 8, padding: '8px 12px', cursor: 'pointer', transition: 'all 0.2s' }}>
+              <div style={{ width: 14, height: 14, borderRadius: '50%', background: s.color, boxShadow: `0 0 8px ${s.color}88`, flexShrink: 0 }} />
+              <span style={{ color: theme.text, fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: current === s.key ? 700 : 500, whiteSpace: 'nowrap' }}>{s.label}</span>
+              {current === s.key && <span style={{ color: s.color, fontSize: 12, marginLeft: 'auto' }}>✓</span>}
+            </button>
+          ))}
+        </div>
+      )}
+      <button onClick={() => setOpen(o => !o)}
+        style={{ width: 44, height: 44, borderRadius: '50%', background: theme.accent, border: `2px solid ${theme.accent}`, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 20px ${theme.accent}66`, transition: 'all 0.3s', fontSize: 18 }}
+        title="Change Color Theme">
+        🎨
+      </button>
+    </div>
+  );
+}
+
+// ── APP ───────────────────────────────────────────────────────────────────────
+function App() {
+  const [themeKey, setThemeKey] = useState(() => {
+    try {
+      const saved = localStorage.getItem('ks_theme');
+      return saved && THEMES[saved] ? saved : 'darkBlue';
+    } catch { return 'darkBlue'; }
+  });
+  const [demoOpen, setDemoOpen] = useState(false);
+
+  const theme = THEMES[themeKey];
+
+  const handleThemeChange = (key) => {
+    setThemeKey(key);
+    try { localStorage.setItem('ks_theme', key); } catch {}
+  };
+
+  useEffect(() => {
+    document.body.style.background = theme.bg;
+    document.body.style.color = theme.text;
+  }, [theme.bg, theme.text]);
+
+  // Parallax scroll
+  useEffect(() => {
+    const handler = () => {
+      const sy = window.scrollY;
+      document.querySelectorAll('[data-parallax]').forEach(el => {
+        const speed = parseFloat(el.dataset.parallax) || 0.3;
+        el.style.transform = `translateY(${sy * speed}px)`;
+      });
+    };
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  return (
+    <div style={{ background: theme.bg, minHeight: '100vh' }}>
+      <Navbar theme={theme} onDemoClick={() => setDemoOpen(true)} />
+      <Hero theme={theme} onDemoClick={() => setDemoOpen(true)} />
+      <TrustBar theme={theme} />
+      <Services theme={theme} />
+      <HowItWorks theme={theme} />
+      <WhyUs theme={theme} />
+      <Industries theme={theme} />
+      <CaseStudy theme={theme} />
+      <CTA theme={theme} onDemoClick={() => setDemoOpen(true)} />
+      <Footer theme={theme} />
+      {demoOpen && <DemoModal theme={theme} onClose={() => setDemoOpen(false)} />}
+      <ThemeSwitcher current={themeKey} onChange={handleThemeChange} />
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>

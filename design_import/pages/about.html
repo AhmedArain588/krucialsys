@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Krucial Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../shared/icons.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}body{overflow-x:hidden;}
+    @media(max-width:900px){.nav-links{display:none!important}.hamburger{display:flex!important;flex-direction:column}.grid-2{grid-template-columns:1fr!important}.grid-3{grid-template-columns:1fr 1fr!important}.grid-4{grid-template-columns:1fr 1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}}
+    @media(max-width:600px){.grid-3{grid-template-columns:1fr!important}.grid-4{grid-template-columns:1fr!important}.footer-grid{grid-template-columns:1fr!important}}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060F}::-webkit-scrollbar-thumb{background:#0A84FF55;border-radius:3px}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script src="../shared/themes.js"></script>
+<script type="text/babel" src="../shared/layout.jsx"></script>
+<script type="text/babel">
+
+const VALUES = [
+  { icon:'Target', title:'Outcome-Driven', desc:'We measure success by your business results — not by lines of code or models deployed. Every engagement has defined, measurable goals.' },
+  { icon:'Wrench', title:'End-to-End Ownership', desc:'We design, build, deploy and support — full stack, full cycle. One partner, complete accountability.' },
+  { icon:'Lock', title:'Data Sovereignty', desc:'Your data stays yours. We build on-premise and private cloud solutions that never send sensitive data off-site without explicit consent.' },
+  { icon:'Handshake', title:'Local Expertise', desc:'Based in Karachi, we understand Pakistani infrastructure, connectivity, compliance and business culture — advantages no offshore vendor can match.' },
+  { icon:'TrendingUp', title:'Built to Scale', desc:'We design systems for where you're going, not just where you are. Every deployment is architected for 10× growth.' },
+  { icon:'FlaskConical', title:'Research-Backed', desc:'Our AI is built on the latest research — not last year's tutorials. We invest in continuous model improvement and technology advancement.' },
+];
+
+const TEAM = [
+  { name:'Leadership & AI Strategy', role:'Driving product direction and client outcomes across all engagements', initials:'KS' },
+  { name:'AI & ML Engineering', role:'Model design, training pipelines, MLOps and production deployment', initials:'ML' },
+  { name:'Computer Vision', role:'CCTV AI, object detection, video analytics and edge inference', initials:'CV' },
+  { name:'Infrastructure & Cloud', role:'Server room design, private cloud, hybrid deployments and DevOps', initials:'IN' },
+  { name:'IoT & Embedded Systems', role:'Sensor networks, firmware, device management and edge computing', initials:'IO' },
+  { name:'Data & Automation', role:'OCR pipelines, RPA, workflow automation and data engineering', initials:'DA' },
+];
+
+function App() {
+  const [themeKey,setThemeKey]=React.useState(getSavedTheme);
+  const [demo,setDemo]=React.useState(false);
+  const t=THEMES[themeKey];
+  React.useEffect(()=>{document.body.style.background=t.bg;},[t.bg]);
+  const [vRef,vVis]=useInView(0.1);
+  const [tRef,tVis]=useInView(0.1);
+  const [sRef,sVis]=useInView(0.1);
+
+  return (
+    <div style={{background:t.bg,minHeight:'100vh'}}>
+      <SharedNavbar theme={t} onDemo={()=>setDemo(true)}/>
+      <PageHero theme={t} badge="About Krucial Systems" title="We Build AI That" highlight="Actually Works." subtitle="A Karachi-based AI engineering company delivering production-grade intelligent systems across Pakistan and beyond." cta="Work With Us" onCta={()=>setDemo(true)}/>
+
+      {/* Mission */}
+      <section style={{background:t.bgAlt,padding:'80px 5%',borderTop:`1px solid ${t.accent}22`}}>
+        <div style={{maxWidth:1280,margin:'0 auto',display:'grid',gridTemplateColumns:'1fr 1fr',gap:80,alignItems:'center'}} className="grid-2">
+          <div>
+            <SectionLabel theme={t} label="Our Mission"/>
+            <h2 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:'clamp(26px,3.5vw,42px)',fontWeight:800,color:t.text,letterSpacing:'-0.03em',lineHeight:1.1,marginBottom:24}}>Bridging the Gap Between AI Research and <span style={{color:t.accent}}>Real Business Outcomes</span></h2>
+            <p style={{color:t.textMuted,fontSize:16,lineHeight:1.75,marginBottom:16}}>Most businesses in Pakistan know AI has potential — but don't know where to start, who to trust, or how to make it work in practice. That's the gap Krucial Systems was built to close.</p>
+            <p style={{color:t.textMuted,fontSize:16,lineHeight:1.75}}>We're not consultants who hand over a report. We're engineers who stay until the system is live, tested and delivering measurable results — and then we stick around to make sure it keeps working.</p>
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+            {[['2020','Founded in Karachi'],['50+','Projects Delivered'],['6','Industries Served'],['30+','Team Members']].map(([v,l])=>(
+              <div key={l} style={{background:t.bg,border:`1px solid ${t.accent}22`,borderRadius:14,padding:'24px 20px',textAlign:'center'}}>
+                <div style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:32,fontWeight:800,color:t.accent}}>{v}</div>
+                <div style={{color:t.textMuted,fontSize:13,marginTop:6}}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section style={{background:t.bg,padding:'80px 5%'}}>
+        <div style={{maxWidth:1280,margin:'0 auto'}}>
+          <div style={{textAlign:'center',marginBottom:56}}>
+            <SectionLabel theme={t} label="What Drives Us"/>
+            <SectionHeading theme={t} sub="The principles behind every project we take on.">Our Values</SectionHeading>
+          </div>
+          <div ref={vRef} style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}} className="grid-3">
+            {VALUES.map((v,i)=><FeatureCard key={v.title} theme={t} icon={v.icon} title={v.title} desc={v.desc} delay={i*0.08} visible={vVis}/>)}
+          </div>
+        </div>
+      </section>
+
+      {/* Team */}
+      <section style={{background:t.bgAlt,padding:'80px 5%',borderTop:`1px solid ${t.accent}22`}}>
+        <div style={{maxWidth:1280,margin:'0 auto'}}>
+          <div style={{textAlign:'center',marginBottom:56}}>
+            <SectionLabel theme={t} label="Our Team"/>
+            <SectionHeading theme={t} sub="Specialists across AI, vision, IoT, cloud and automation.">The Engineering Team</SectionHeading>
+          </div>
+          <div ref={tRef} style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}} className="grid-3">
+            {TEAM.map((m,i)=>(
+              <div key={m.name} style={{background:t.bg,border:`1px solid ${t.accent}22`,borderRadius:14,padding:'24px',opacity:tVis?1:0,transform:tVis?'none':'translateY(20px)',transition:`all 0.6s ease ${i*0.08}s`}}>
+                <div style={{width:52,height:52,borderRadius:'50%',background:`${t.accent}22`,border:`2px solid ${t.accent}44`,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16}}>
+                  <span style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:800,fontSize:14,color:t.accent}}>{m.initials}</span>
+                </div>
+                <h3 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:16,fontWeight:700,color:t.text,marginBottom:6}}>{m.name}</h3>
+                <p style={{color:t.textMuted,fontSize:13,lineHeight:1.6}}>{m.role}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Story */}
+      <section style={{background:t.bg,padding:'80px 5%'}}>
+        <div style={{maxWidth:800,margin:'0 auto'}}>
+          <div style={{textAlign:'center',marginBottom:48}}>
+            <SectionLabel theme={t} label="Our Story"/>
+            <SectionHeading theme={t}>Built in Karachi.<br/>Built for Pakistan.</SectionHeading>
+          </div>
+          {[
+            ['2020 — The Beginning','Krucial Systems was founded by a team of engineers frustrated by the gap between AI hype and practical deployment in Pakistan. Most enterprise software was foreign, overpriced, poorly supported and not designed for local infrastructure realities.'],
+            ['2021–22 — First Deployments','We deployed our first CCTV AI systems for retail clients in Karachi, proving that enterprise-grade AI could be made accessible to Pakistani businesses. Word spread through referrals.'],
+            ['2023–24 — Expanding Verticals','Expanded into data digitisation, automation and IoT — building multi-disciplinary project teams and delivering solutions for banking, healthcare and logistics clients.'],
+            ['2025–26 — Platform Scale','Today, Krucial Systems operates across 6 industries, 50+ live deployments and a 30+ person engineering team. We're building Pakistan's most trusted AI implementation partner.'],
+          ].map(([year,text],i)=>(
+            <div key={year} style={{display:'flex',gap:24,marginBottom:36}} ref={i===0?sRef:null}>
+              <div style={{width:3,background:`${t.accent}33`,borderRadius:2,flexShrink:0,position:'relative'}}>
+                <div style={{position:'absolute',top:4,left:'50%',transform:'translateX(-50%)',width:10,height:10,borderRadius:'50%',background:t.accent,boxShadow:`0 0 8px ${t.accent}`}}/>
+              </div>
+              <div style={{paddingTop:0,opacity:sVis?1:0,transform:sVis?'none':'translateX(-20px)',transition:`all 0.7s ease ${i*0.15}s`}}>
+                <div style={{color:t.accent,fontFamily:"'Space Grotesk',sans-serif",fontSize:13,fontWeight:700,marginBottom:8}}>{year}</div>
+                <p style={{color:t.textMuted,fontSize:15,lineHeight:1.7}}>{text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{background:t.bgAlt,padding:'80px 5%',borderTop:`1px solid ${t.accent}22`}}>
+        <div style={{maxWidth:700,margin:'0 auto',textAlign:'center'}}>
+          <h2 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:'clamp(26px,3.5vw,40px)',fontWeight:800,color:t.text,letterSpacing:'-0.03em',marginBottom:16}}>Join Us or <span style={{color:t.accent}}>Work With Us</span></h2>
+          <p style={{color:t.textMuted,fontSize:16,lineHeight:1.7,marginBottom:32}}>Whether you're a business looking for AI solutions or an engineer wanting to build them — we'd love to talk.</p>
+          <div style={{display:'flex',gap:16,justifyContent:'center',flexWrap:'wrap'}}>
+            <button onClick={()=>setDemo(true)} style={{background:t.accent,color:t.accentText||'#fff',border:'none',borderRadius:8,padding:'14px 28px',fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:15,cursor:'pointer',boxShadow:`0 0 30px ${t.accent}44`}}>Get a Demo</button>
+            <a href="contact.html" style={{display:'inline-flex',alignItems:'center',color:t.text,border:`1px solid ${t.accent}44`,borderRadius:8,padding:'14px 28px',fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,fontSize:15,textDecoration:'none'}}>Contact Us</a>
+          </div>
+        </div>
+      </section>
+
+      <SharedFooter theme={t}/>
+      {demo&&<SharedDemoModal theme={t} onClose={()=>setDemo(false)}/>}
+      <SharedThemeSwitcher current={themeKey} onChange={k=>{setThemeKey(k);saveTheme(k);}}/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body></html>

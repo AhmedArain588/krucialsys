@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Cloud & Infrastructure — Krucial Systems</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="../shared/icons.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{overflow-x:hidden;}@media(max-width:900px){.nav-links{display:none!important}.hamburger{display:flex!important;flex-direction:column}.hero-split{grid-template-columns:1fr!important}.grid-2{grid-template-columns:1fr!important}.grid-3{grid-template-columns:1fr 1fr!important}.grid-4{grid-template-columns:1fr 1fr!important}.footer-grid{grid-template-columns:1fr 1fr!important}}@media(max-width:600px){.grid-3,.grid-4,.footer-grid{grid-template-columns:1fr!important}}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#05060F}::-webkit-scrollbar-thumb{background:#0A84FF55;border-radius:3px}</style>
+</head><body><div id="root"></div>
+<script src="../shared/themes.js"></script>
+<script type="text/babel" src="../shared/layout.jsx"></script>
+<script type="text/babel">
+
+const { useState, useEffect } = React;
+
+function ServerRackVisual({ theme: t }) {
+  const [tick, setTick] = useState(0);
+  useEffect(() => { const id = setInterval(() => setTick(x => x + 1), 800); return () => clearInterval(id); }, []);
+
+  const racks = [
+    { label:'Web Tier', units:['Load Balancer','App Server 01','App Server 02','App Server 03'], util:[72,65,68,71] },
+    { label:'Data Tier', units:['Primary DB','Replica DB','Cache Layer','Backup Node'], util:[80,45,55,20] },
+    { label:'Network', units:['Core Switch','Firewall','IDS/IPS','VPN Gateway'], util:[60,30,25,15] },
+  ];
+
+  return (
+    <div style={{ background:t.bgAlt, border:`1px solid ${t.accent}33`, borderRadius:16, padding:24 }}>
+      <div style={{ display:'flex', justifyContent:'space-between', marginBottom:20 }}>
+        <span style={{ color:t.text, fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:14 }}>Infrastructure Overview</span>
+        <span style={{ color:'#00C896', fontSize:11, background:'#00C89622', borderRadius:100, padding:'3px 10px', fontWeight:700 }}>● ALL SYSTEMS NORMAL</span>
+      </div>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:10, marginBottom:16 }}>
+        {racks.map((rack, ri) => (
+          <div key={rack.label} style={{ background:t.bg, border:`1px solid ${t.accent}22`, borderRadius:10, padding:'12px 10px' }}>
+            <div style={{ color:t.accent, fontSize:10, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif", letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:10, textAlign:'center' }}>{rack.label}</div>
+            {rack.units.map((unit, ui) => {
+              const util = rack.util[ui] + (tick % 3 === ui ? 5 : 0);
+              return (
+                <div key={unit} style={{ marginBottom:6 }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:2 }}>
+                    <span style={{ color:t.textMuted, fontSize:9 }}>{unit}</span>
+                    <span style={{ color: util > 75 ? '#E8A020' : t.accent, fontSize:9, fontWeight:700 }}>{util}%</span>
+                  </div>
+                  <div style={{ height:3, background:`${t.accent}18`, borderRadius:2 }}>
+                    <div style={{ width:`${util}%`, height:'100%', background: util > 75 ? '#E8A020' : t.accent, borderRadius:2, transition:'width 0.8s ease' }}/>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:8 }}>
+        {[['99.9%','Uptime'],['< 15min','RTO'],['0','Active Alerts'],['24/7','NOC']].map(([v,l]) => (
+          <div key={l} style={{ background:t.bg, border:`1px solid ${t.accent}18`, borderRadius:8, padding:'8px', textAlign:'center' }}>
+            <div style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:14, fontWeight:800 }}>{v}</div>
+            <div style={{ color:t.textMuted, fontSize:9, marginTop:2 }}>{l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [themeKey, setThemeKey] = useState(getSavedTheme);
+  const [demo, setDemo] = useState(false);
+  const t = THEMES[themeKey];
+  useEffect(() => { document.body.style.background = t.bg; }, [t.bg]);
+  const [featRef, featVis] = useInView(0.1);
+  const [ucRef, ucVis] = useInView(0.1);
+
+  const features = [
+    ['Server','Server Room Design','End-to-end server room design: power distribution, precision cooling, structured cabling, rack layouts and physical security.'],
+    ['Cloud','Private Cloud','VMware, Proxmox or OpenStack private cloud deployments with self-service provisioning portals and full tenant isolation.'],
+    ['Network','Hybrid Architecture','Seamlessly integrate on-premise infrastructure with AWS, Azure or local cloud providers — best of both worlds.'],
+    ['Shield','Security & Compliance','Enterprise firewalls, IDS/IPS, vulnerability scanning, patch management and regulatory compliance frameworks (PCI-DSS, ISO 27001).'],
+    ['RefreshCw','Disaster Recovery','Off-site encrypted backups, failover clusters, RTO/RPO planning, runbook documentation and regular DR rehearsals.'],
+    ['Wifi','Network Infrastructure','SD-WAN, MPLS, fibre design, Wi-Fi 6 enterprise deployments and real-time network performance monitoring.'],
+  ];
+
+  return (
+    <div style={{ background:t.bg, minHeight:'100vh' }}>
+      <SharedNavbar theme={t} onDemo={() => setDemo(true)}/>
+      <section style={{ minHeight:'100vh', display:'flex', alignItems:'center', background:t.bg, position:'relative', overflow:'hidden', paddingTop:80 }}>
+        <div style={{ position:'absolute', inset:0, backgroundImage:`linear-gradient(${t.accent}05 1px,transparent 1px),linear-gradient(90deg,${t.accent}05 1px,transparent 1px)`, backgroundSize:'56px 56px' }}/>
+        <div style={{ position:'absolute', bottom:'10%', left:'5%', width:400, height:200, background:`${t.accent}08`, filter:'blur(60px)', borderRadius:'50%' }}/>
+        <div style={{ maxWidth:1280, margin:'0 auto', padding:'40px 5% 80px', width:'100%', position:'relative' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:64, alignItems:'center' }} className="hero-split">
+            <div>
+              <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:`${t.accent}18`, border:`1px solid ${t.accent}44`, borderRadius:100, padding:'6px 16px', marginBottom:24 }}>
+                <Icon name="Server" size={12} color={t.accent}/>
+                <span style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase' }}>Cloud & Infrastructure</span>
+              </div>
+              <h1 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:'clamp(34px,4.5vw,60px)', fontWeight:800, color:t.text, lineHeight:1.05, letterSpacing:'-0.03em', marginBottom:24 }}>
+                Enterprise Grade.<br /><span style={{ color:t.accent }}>Pakistan Ready.</span><br />Always On.
+              </h1>
+              <p style={{ color:t.textMuted, fontSize:17, lineHeight:1.75, maxWidth:460, marginBottom:36 }}>
+                Private cloud, server room design and hybrid infrastructure built for Pakistani enterprise — data sovereign, high availability, 24/7 NOC monitored with local support you can actually reach.
+              </p>
+              <div style={{ display:'flex', gap:12, flexWrap:'wrap', marginBottom:48 }}>
+                <button onClick={() => setDemo(true)} style={{ background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:8, padding:'14px 28px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:15, cursor:'pointer', boxShadow:`0 0 30px ${t.accent}44` }}>Get a Free Infrastructure Audit</button>
+                <a href="services.html" style={{ display:'inline-flex', alignItems:'center', color:t.text, border:`1px solid ${t.accent}44`, borderRadius:8, padding:'14px 24px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:15, textDecoration:'none' }}>← All Services</a>
+              </div>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12 }}>
+                {[['99.9%','Uptime SLA'],['< 15min','RTO / RPO'],['24/7','NOC Support']].map(([v,l]) => (
+                  <div key={l} style={{ background:t.bgAlt, border:`1px solid ${t.accent}22`, borderRadius:10, padding:'16px', textAlign:'center' }}>
+                    <div style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:22, fontWeight:800 }}>{v}</div>
+                    <div style={{ color:t.textMuted, fontSize:11, marginTop:4 }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div><ServerRackVisual theme={t}/></div>
+          </div>
+        </div>
+      </section>
+      <section style={{ background:t.bgAlt, padding:'90px 5%', borderTop:`1px solid ${t.accent}22` }}>
+        <div style={{ maxWidth:1280, margin:'0 auto' }}>
+          <div style={{ textAlign:'center', marginBottom:56 }}><SectionLabel theme={t} label="Capabilities"/><SectionHeading theme={t} sub="Full-stack infrastructure design, build and operate.">What We Build</SectionHeading></div>
+          <div ref={featRef} style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:20 }} className="grid-3">
+            {features.map(([icon,title,desc],i) => <FeatureCard key={title} theme={t} icon={icon} title={title} desc={desc} delay={i*0.08} visible={featVis}/>)}
+          </div>
+        </div>
+      </section>
+      <section style={{ background:t.bg, padding:'90px 5%' }}>
+        <div style={{ maxWidth:1280, margin:'0 auto' }}>
+          <div style={{ textAlign:'center', marginBottom:56 }}><SectionLabel theme={t} label="Deployments"/><SectionHeading theme={t} sub="Enterprise infrastructure live across Pakistan.">Where We Deploy It</SectionHeading></div>
+          <div ref={ucRef} style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:20 }} className="grid-2">
+            {[
+              ['Landmark','Core Banking Private Cloud','Tier-1 bank private cloud — 99.99% uptime, full data sovereignty, PCI-DSS compliant, 400-user capacity with sub-5ms latency.','Banking','99.99% uptime'],
+              ['Activity','Hospital Mission-Critical DC','Hospital data centre: dual-feed UPS, N+1 cooling, 15-minute RPO for patient data and HIPAA-aligned access controls.','Healthcare','15-min RPO'],
+              ['Building2','Enterprise HQ Hybrid Cloud','400-user migration from legacy on-premise to hybrid architecture — 60% infrastructure cost reduction in Year 1.','Corporate','60% cost reduction'],
+              ['Building2','Government Sovereign Cloud','Air-gapped private cloud for government ministry — classified data handling, biometric access and 24/7 armed monitoring.','Government','Air-gapped secure'],
+            ].map(([icon,title,desc,tag,stat],i) => (
+              <div key={title} style={{ background:t.bgAlt, border:`1px solid ${t.accent}22`, borderRadius:16, padding:'28px', opacity:ucVis?1:0, transform:ucVis?'none':'translateY(20px)', transition:`all 0.6s ease ${i*0.1}s` }}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=`${t.accent}55`;e.currentTarget.style.transform='translateY(-4px)';}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=`${t.accent}22`;e.currentTarget.style.transform='none';}}>
+                <div style={{ display:'flex', justifyContent:'space-between', marginBottom:16, flexWrap:'wrap', gap:8 }}>
+                  <div style={{ width:44, height:44, borderRadius:10, background:`${t.accent}18`, border:`1px solid ${t.accent}33`, display:'flex', alignItems:'center', justifyContent:'center' }}><Icon name={icon} size={20} color={t.accent}/></div>
+                  <div style={{ display:'flex', gap:8 }}>
+                    <span style={{ background:`${t.accent}18`, color:t.accent, borderRadius:4, padding:'2px 10px', fontSize:10, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif", textTransform:'uppercase' }}>{tag}</span>
+                    <span style={{ background:`${t.accent}33`, color:t.accent, borderRadius:4, padding:'2px 10px', fontSize:11, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif" }}>{stat}</span>
+                  </div>
+                </div>
+                <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:18, fontWeight:700, color:t.text, marginBottom:10 }}>{title}</h3>
+                <p style={{ color:t.textMuted, fontSize:14, lineHeight:1.65 }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section style={{ background:t.bgAlt, padding:'80px 5%', borderTop:`1px solid ${t.accent}22` }}>
+        <div style={{ maxWidth:700, margin:'0 auto', textAlign:'center' }}>
+          <SectionLabel theme={t} label="Get Started"/>
+          <h2 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:'clamp(28px,4vw,44px)', fontWeight:800, color:t.text, letterSpacing:'-0.03em', marginBottom:20 }}>Ready to Build <span style={{ color:t.accent }}>Bulletproof Infrastructure?</span></h2>
+          <p style={{ color:t.textMuted, fontSize:16, lineHeight:1.7, marginBottom:36 }}>We start with a free infrastructure audit — assessing your current state and designing a high-availability roadmap within 72 hours.</p>
+          <div style={{ display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap' }}>
+            <button onClick={() => setDemo(true)} style={{ background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:8, padding:'15px 32px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:15, cursor:'pointer', boxShadow:`0 0 40px ${t.accent}44` }}>Book a Free Infrastructure Audit</button>
+            <a href="services.html" style={{ display:'inline-flex', alignItems:'center', color:t.accent, border:`1px solid ${t.accent}55`, borderRadius:8, padding:'15px 32px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:15, textDecoration:'none' }}>← All Services</a>
+          </div>
+        </div>
+      </section>
+      <SharedFooter theme={t}/>{demo && <SharedDemoModal theme={t} onClose={() => setDemo(false)}/>}
+      <SharedThemeSwitcher current={themeKey} onChange={k=>{setThemeKey(k);saveTheme(k);}}/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body></html>

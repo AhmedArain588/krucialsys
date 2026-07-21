@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.vue';
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; font-family: 'Inter', sans-serif; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #05060F; }
+::-webkit-scrollbar-thumb { background: #0A84FF55; border-radius: 3px; }
+
+/* ── Responsive grid classes (used across all pages) ── */
+@media (max-width: 900px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: flex !important; flex-direction: column; }
+
+  /* Hero layouts */
+  .hero-grid  { grid-template-columns: 1fr !important; }
+  .hero-split { grid-template-columns: 1fr !important; }
+  .hero-visual { display: none !important; }
+
+  /* Generic grids */
+  .grid-2 { grid-template-columns: 1fr !important; }
+  .grid-3 { grid-template-columns: 1fr 1fr !important; }
+  .grid-4 { grid-template-columns: 1fr 1fr !important; }
+
+  /* Named grids (home page) */
+  .services-grid  { grid-template-columns: 1fr 1fr !important; }
+  .process-grid   { grid-template-columns: 1fr 1fr !important; }
+  .why-grid       { grid-template-columns: 1fr !important; }
+  .industries-grid { grid-template-columns: 1fr 1fr !important; }
+  .cases-grid     { grid-template-columns: 1fr !important; }
+  .footer-grid    { grid-template-columns: 1fr 1fr !important; }
+
+  .process-line { display: none !important; }
+}
+
+@media (max-width: 600px) {
+  .grid-3       { grid-template-columns: 1fr !important; }
+  .grid-4       { grid-template-columns: 1fr !important; }
+  .services-grid  { grid-template-columns: 1fr !important; }
+  .industries-grid { grid-template-columns: 1fr !important; }
+  .process-grid   { grid-template-columns: 1fr !important; }
+  .cases-grid     { grid-template-columns: 1fr !important; }
+  .footer-grid    { grid-template-columns: 1fr !important; }
+}
