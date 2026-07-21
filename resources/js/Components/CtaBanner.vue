@@ -23,7 +23,7 @@ const emit = defineEmits(['demo']);
                             :style="{ background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:'8px', padding:'16px 36px', fontFamily:`'Space Grotesk', sans-serif`, fontWeight:700, fontSize:'16px', cursor:'pointer', boxShadow:`0 0 40px ${t.accent}55`, transition:'all 0.2s' }"
                             @mouseenter="(e) => { e.target.style.transform='translateY(-3px)'; e.target.style.boxShadow=`0 8px 50px ${t.accent}77`; }"
                             @mouseleave="(e) => { e.target.style.transform=''; e.target.style.boxShadow=`0 0 40px ${t.accent}55`; }"
-                        >Book a Demo</button>
+                        >Get in Touch</button>
                         <Link href="/contact"
                             :style="{ display:'inline-block', textDecoration:'none', background:'transparent', color:t.text, border:`1px solid ${t.accent}55`, borderRadius:'8px', padding:'16px 36px', fontFamily:`'Space Grotesk', sans-serif`, fontWeight:600, fontSize:'16px', cursor:'pointer', transition:'all 0.2s' }"
                             @mouseenter="(e) => { e.target.style.borderColor=t.accent; e.target.style.background=`${t.accent}11`; }"

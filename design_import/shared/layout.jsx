@@ -77,7 +77,7 @@ function SharedNavbar({ theme: t, onDemo }) {
           ))}
           <button onClick={onDemo} style={{ marginLeft:8, background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:6, padding:'10px 22px', fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:14, cursor:'pointer', boxShadow:`0 0 20px ${t.accent}44`, transition:'all 0.2s' }}
             onMouseEnter={e=>{e.target.style.transform='translateY(-2px)';e.target.style.boxShadow=`0 6px 30px ${t.accent}77`;}}
-            onMouseLeave={e=>{e.target.style.transform='';e.target.style.boxShadow=`0 0 20px ${t.accent}44`;}}>Book a Demo</button>
+            onMouseLeave={e=>{e.target.style.transform='';e.target.style.boxShadow=`0 0 20px ${t.accent}44`;}}>Get in Touch</button>
         </div>
 
         <button onClick={() => setMenuOpen(!menuOpen)} className="hamburger"
@@ -96,7 +96,7 @@ function SharedNavbar({ theme: t, onDemo }) {
               ))}
             </div>
           ))}
-          <button onClick={onDemo} style={{ marginTop:16, width:'100%', background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:6, padding:12, fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:15, cursor:'pointer' }}>Book a Demo</button>
+          <button onClick={onDemo} style={{ marginTop:16, width:'100%', background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:6, padding:12, fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:15, cursor:'pointer' }}>Get in Touch</button>
         </div>
       )}
     </nav>
@@ -196,7 +196,7 @@ function SharedDemoModal({ theme: t, onClose }) {
           </div>
         ) : (
           <>
-            <div style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:11, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', marginBottom:10 }}>Book a Demo</div>
+            <div style={{ color:t.accent, fontFamily:"'Space Grotesk',sans-serif", fontSize:11, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', marginBottom:10 }}>Get in Touch</div>
             <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", color:t.text, fontSize:26, fontWeight:800, letterSpacing:'-0.02em', marginBottom:28 }}>Let's Talk AI</h3>
             <form onSubmit={e=>{ e.preventDefault(); setSent(true); }}>
               {[['name','Full Name'],['email','Work Email'],['company','Company']].map(([f,l])=>(

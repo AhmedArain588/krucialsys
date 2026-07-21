@@ -107,7 +107,7 @@ const NAV_ITEMS = [
                     }"
                     @mouseenter="(e) => { e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow=`0 4px 30px ${t.accent}88`; }"
                     @mouseleave="(e) => { e.target.style.transform=''; e.target.style.boxShadow=`0 0 20px ${t.accent}55`; }"
-                >Book a Demo</button>
+                >Get in Touch</button>
             </div>
 
             <!-- Hamburger -->
@@ -125,7 +125,7 @@ const NAV_ITEMS = [
                     :style="{ display:'block', color:t.textMuted, fontFamily:`'Space Grotesk',sans-serif`, padding:'9px 0 9px 16px', borderBottom:`1px solid ${t.accent}08`, fontSize:'13px', textDecoration:'none' }"
                 >→ {{ child.label }}</Link>
             </div>
-            <button @click="$emit('demo')" :style="{ marginTop:'16px', width:'100%', background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:'6px', padding:'12px', fontFamily:`'Space Grotesk',sans-serif`, fontWeight:600, fontSize:'15px', cursor:'pointer' }">Book a Demo</button>
+            <button @click="$emit('demo')" :style="{ marginTop:'16px', width:'100%', background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:'6px', padding:'12px', fontFamily:`'Space Grotesk',sans-serif`, fontWeight:600, fontSize:'15px', cursor:'pointer' }">Get in Touch</button>
         </div>
     </nav>
 </template>

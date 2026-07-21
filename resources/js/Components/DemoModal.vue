@@ -24,7 +24,7 @@ const submit = () => { sent.value = true; };
             </div>
 
             <template v-else>
-                <div :style="{ color:t.accent, fontFamily:`'Space Grotesk', sans-serif`, fontSize:'12px', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', marginBottom:'12px' }">Book a Demo</div>
+                <div :style="{ color:t.accent, fontFamily:`'Space Grotesk', sans-serif`, fontSize:'12px', fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', marginBottom:'12px' }">Get in Touch</div>
                 <h3 :style="{ fontFamily:`'Space Grotesk', sans-serif`, color:t.text, fontSize:'26px', fontWeight:800, letterSpacing:'-0.02em', marginBottom:'28px' }">Let's Talk AI</h3>
                 <form @submit.prevent="submit">
                     <div v-for="[field, label] in [['name','Full Name'],['email','Work Email'],['company','Company Name']]" :key="field" :style="{ marginBottom:'16px' }">

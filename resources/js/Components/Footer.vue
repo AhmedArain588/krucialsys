@@ -13,8 +13,8 @@ const cols = [
 
 /* Offices exactly as recorded in the company profile. */
 const offices = [
-    { city:'Karachi — Head Office', lines:['14, Standard Chartered Bank Chambers,', 'Talpur Road, Karachi – 74400, Pakistan'], tel:'92-21-32415196/7', fax:'92-21-32415785' },
-    { city:'Dubai — GCC Office',    lines:['Office 204, Saeed Tower 1,', 'Sheikh Zayed Road, Dubai, UAE'], tel:'+971 4 393 6848' },
+    { city:'Karachi — Head Office', lines:['14, Standard Chartered Bank Chambers,', 'Talpur Road, Karachi – 74400, Pakistan'], tel:'92-21-38921233', fax:'92-21-32415785' },
+    { city:'Dubai — GCC Office',    lines:['Office 204, Saeed Tower 1,', 'Sheikh Zayed Road, Dubai, UAE'], tel:'+971 56 427 9233' },
     { city:'Huntsville — USA',      lines:['3017 Kirkland Dr NW,', 'Huntsville, AL 35810, USA'], tel:'+1 256 489 0690' },
 ];
 </script>

@@ -146,7 +146,7 @@ const safe = (v) => (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(v) ? v : 'transpa
                         Built for real-world impact — CCTV analytics, data digitisation and automation.
                     </p>
                     <button class="pv-btn" :style="{ background: safe(form.accent), color: safe(form.accent_text) }">
-                        Book a demo
+                        Get in Touch
                     </button>
                 </div>
 

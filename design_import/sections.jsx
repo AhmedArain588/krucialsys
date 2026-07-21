@@ -89,7 +89,7 @@ function Navbar({ theme: t, onDemoClick }) {
             style={{ marginLeft:8, background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:6, padding:'10px 22px', fontFamily:"'Space Grotesk', sans-serif", fontWeight:600, fontSize:14, cursor:'pointer', letterSpacing:'0.03em', transition:'all 0.2s', boxShadow:`0 0 20px ${t.accent}55` }}
             onMouseEnter={e => { e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow=`0 4px 30px ${t.accent}88`; }}
             onMouseLeave={e => { e.target.style.transform=''; e.target.style.boxShadow=`0 0 20px ${t.accent}55`; }}>
-            Book a Demo
+            Get in Touch
           </button>
         </div>
 
@@ -111,7 +111,7 @@ function Navbar({ theme: t, onDemoClick }) {
               ))}
             </div>
           ))}
-          <button onClick={onDemoClick} style={{ marginTop:16, width:'100%', background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:6, padding:12, fontFamily:"'Space Grotesk', sans-serif", fontWeight:600, fontSize:15, cursor:'pointer' }}>Book a Demo</button>
+          <button onClick={onDemoClick} style={{ marginTop:16, width:'100%', background:t.accent, color:t.accentText||'#fff', border:'none', borderRadius:6, padding:12, fontFamily:"'Space Grotesk', sans-serif", fontWeight:600, fontSize:15, cursor:'pointer' }}>Get in Touch</button>
         </div>
       )}
     </nav>
@@ -823,7 +823,7 @@ function CTA({ theme: t, onDemoClick }) {
                 style={{ background: t.accent, color: t.accentText || '#fff', border: 'none', borderRadius: 8, padding: '16px 36px', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 16, cursor: 'pointer', boxShadow: `0 0 40px ${t.accent}55`, transition: 'all 0.2s' }}
                 onMouseEnter={e => { e.target.style.transform = 'translateY(-3px)'; e.target.style.boxShadow = `0 8px 50px ${t.accent}77`; }}
                 onMouseLeave={e => { e.target.style.transform = ''; e.target.style.boxShadow = `0 0 40px ${t.accent}55`; }}>
-                Book a Demo
+                Get in Touch
               </button>
               <button
                 style={{ background: 'transparent', color: t.text, border: `1px solid ${t.accent}55`, borderRadius: 8, padding: '16px 36px', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 16, cursor: 'pointer', transition: 'all 0.2s' }}
@@ -905,7 +905,7 @@ function DemoModal({ theme: t, onClose }) {
           </div>
         ) : (
           <>
-            <div style={{ color: t.accent, fontFamily: "'Space Grotesk', sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12 }}>Book a Demo</div>
+            <div style={{ color: t.accent, fontFamily: "'Space Grotesk', sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12 }}>Get in Touch</div>
             <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", color: t.text, fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 28 }}>Let's Talk AI</h3>
             <form onSubmit={handleSubmit}>
               {[['name', 'Full Name'], ['email', 'Work Email'], ['company', 'Company Name']].map(([field, label]) => (
