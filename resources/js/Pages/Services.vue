@@ -19,6 +19,7 @@ const SERVICES = [
     { slug:'data-digitisation',    icon:'FileText', title:'Data Digitisation',      color:'#E8A020', desc:'Convert legacy documents and paper records into structured digital data using AI-powered OCR and extraction.', features:['AI-Powered OCR','Form Extraction','Data Validation','Legacy Migration','Audit Trails'] },
     { slug:'iot-smart-systems',    icon:'Wifi',     title:'IoT & Smart Systems',    color:'#FF6B6B', desc:'Connect your physical infrastructure — smart offices, energy systems, and sensor networks on one platform.', features:['Smart Office Automation','Energy Monitoring','Asset Tracking','Environmental Sensors','Remote Management'] },
     { slug:'cloud-infrastructure', icon:'Cloud',    title:'Cloud & Infrastructure', color:'#4ECDC4', desc:'Enterprise-grade private cloud, server rooms, and hybrid deployments with local support and data sovereignty.', features:['Private Cloud','Server Room Design','Hybrid Deployment','Disaster Recovery','24/7 Monitoring'] },
+    { slug:'blockchain', icon:'Blocks', title:'Blockchain & Cardano', color:'#0033AD', desc:'Smart contracts, native tokens, verifiable credentials and on-chain record integrity, engineered on Cardano.', features:['Aiken & Plutus Contracts','Native Tokens & NFTs','Verifiable Credentials','dApp & Wallet Integration','Chain Infrastructure'] },
 ];
 
 const hoveredSlug = ref(null);

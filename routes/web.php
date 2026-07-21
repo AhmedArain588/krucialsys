@@ -16,6 +16,7 @@ Route::get('/services/automation', fn() => Inertia::render('services/Automation'
 Route::get('/services/data-digitisation', fn() => Inertia::render('services/DataDigitisation'));
 Route::get('/services/iot-smart-systems', fn() => Inertia::render('services/IotSmartSystems'));
 Route::get('/services/cloud-infrastructure', fn() => Inertia::render('services/CloudInfrastructure'));
+Route::get('/services/blockchain', fn() => Inertia::render('services/Blockchain'));
 Route::get('/industries', fn() => Inertia::render('Industries'));
 Route::get('/case-studies', fn() => Inertia::render('CaseStudies'));
 Route::get('/about', fn() => Inertia::render('About'));

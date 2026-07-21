@@ -7,7 +7,7 @@ const { theme: t } = useTheme();
 /* Every entry must point at a real route — no placeholder anchors. */
 const cols = [
     { title:'Company', links:[['About Us','/about'],['Case Studies','/case-studies'],['Industries','/industries'],['Insights','/blog']] },
-    { title:'Services', links:[['AI Solutions','/services/ai-solutions'],['CCTV AI Systems','/services/cctv-ai'],['Automation','/services/automation'],['Data Digitisation','/services/data-digitisation'],['IoT & Smart Systems','/services/iot-smart-systems'],['Cloud & Infrastructure','/services/cloud-infrastructure']] },
+    { title:'Services', links:[['AI Solutions','/services/ai-solutions'],['CCTV AI Systems','/services/cctv-ai'],['Automation','/services/automation'],['Data Digitisation','/services/data-digitisation'],['IoT & Smart Systems','/services/iot-smart-systems'],['Cloud & Infrastructure','/services/cloud-infrastructure'],['Blockchain & Cardano','/services/blockchain']] },
     { title:'Support', links:[['Contact','/contact'],['Privacy Policy','/privacy-policy'],['Terms of Use','/terms']] },
 ];
 
@@ -34,9 +34,9 @@ const offices = [
                             :style="{ color:t.textMuted, fontSize:'13px', marginBottom:'8px', display:'flex', alignItems:'center', gap:'8px', textDecoration:'none' }">
                             <KsIcon name="Mail" :size="14" :color="t.accent" />info@krucialsys.com
                         </a>
-                        <a href="tel:+922132415196"
+                        <a href="tel:+922138921233"
                             :style="{ color:t.textMuted, fontSize:'13px', marginBottom:'8px', display:'flex', alignItems:'center', gap:'8px', textDecoration:'none' }">
-                            <KsIcon name="Phone" :size="14" :color="t.accent" />92-21-32415196/7
+                            <KsIcon name="Phone" :size="14" :color="t.accent" />92-21-38921233
                         </a>
                         <div :style="{ color:t.textMuted, fontSize:'13px', display:'flex', alignItems:'flex-start', gap:'8px', lineHeight:1.6 }">
                             <div :style="{ marginTop:'3px', flexShrink:0 }"><KsIcon name="MapPin" :size="14" :color="t.accent" /></div>

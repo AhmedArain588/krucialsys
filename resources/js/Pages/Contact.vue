@@ -19,7 +19,7 @@ const submit = () => form.post('/contact', { onSuccess: () => { sent.value = tru
 // Animation: pulses moving along channels
 const channels = [
     { icon:'Mail',  label:'Email',     value:'info@krucialsys.com', sub:'Replies within 4 hours' },
-    { icon:'Phone', label:'Phone', value:'92-21-32415196/7', sub:'Mon–Sat, 10am–7pm PKT' },
+    { icon:'Phone', label:'Phone', value:'92-21-38921233', sub:'Mon–Sat, 10am–7pm PKT' },
     { icon:'MapPin', label:'Office',   value:'14, Talpur Road, Karachi – 74400', sub:'Standard Chartered Bank Chambers' },
     { icon:'Clock', label:'Response',  value:'< 24 hours', sub:'Average reply time' },
 ];
@@ -123,7 +123,7 @@ const labelStyle = (t) => ({
                         <div :style="{ color:t.accent, fontFamily:`'Space Grotesk',sans-serif`, fontSize:'12px', fontWeight:700, letterSpacing:'0.15em', textTransform:'uppercase', marginBottom:'16px' }">Contact Information</div>
                         <h2 :style="{ fontFamily:`'Space Grotesk',sans-serif`, fontSize:'clamp(24px,3vw,36px)', fontWeight:800, color:t.text, letterSpacing:'-0.03em', lineHeight:1.1, marginBottom:'32px' }">Talk to Our<br><span :style="{ color:t.accent }">Engineering Team</span></h2>
 
-                        <div v-for="[icon,label,val] in [['Mail','Email','info@krucialsys.com'],['Phone','Phone','92-21-32415196/7'],['MapPin','Office','14, Talpur Road, Karachi'],['Clock','Response Time','Within 24 business hours']]" :key="label"
+                        <div v-for="[icon,label,val] in [['Mail','Email','info@krucialsys.com'],['Phone','Phone','92-21-38921233'],['MapPin','Office','14, Talpur Road, Karachi'],['Clock','Response Time','Within 24 business hours']]" :key="label"
                             :style="{ display:'flex', gap:'16px', marginBottom:'24px', alignItems:'flex-start' }">
                             <div :style="{ width:'44px', height:'44px', borderRadius:'10px', background:`${t.accent}18`, border:`1px solid ${t.accent}33`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }">
                                 <KsIcon :name="icon" :size="20" :color="t.accent" />

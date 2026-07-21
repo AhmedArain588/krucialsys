@@ -22,6 +22,7 @@ const NAV_ITEMS = [
         { label: 'Data Digitisation',      href: '/services/data-digitisation' },
         { label: 'IoT & Smart Systems',    href: '/services/iot-smart-systems' },
         { label: 'Cloud & Infrastructure', href: '/services/cloud-infrastructure' },
+        { label: 'Blockchain & Cardano',   href: '/services/blockchain' },
     ]},
     { label: 'Industries',   href: '/industries' },
     { label: 'Case Studies', href: '/case-studies' },
